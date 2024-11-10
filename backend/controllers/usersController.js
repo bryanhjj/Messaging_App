@@ -28,6 +28,11 @@ const validateUser = [
 
 const prisma = new PrismaClient();
 
+exports.usersAllGet = async (req, res) => {
+    const result = await prisma.user.findMany();
+    res.json(result);
+};
+
 // to implement bcryptjs into usersCreatePost
 exports.usersCreatePost = async (req, res) => {
     const {username, email, password} = req.body;
@@ -41,7 +46,26 @@ exports.usersCreatePost = async (req, res) => {
     res.json(result);
 };
 
-exports.usersAllGet = async (req, res) => {
-    const result = await prisma.user.findMany();
+exports.usersUpdatePost = async (req, res) => {
+    const { id } = req.params;
+    const { email } = req.body;
+    const result = await prisma.user.update({
+        where: {
+            id: Number(id),
+        },
+        data: {
+            email: email,
+        }
+    });
+    res.json(result);
+};
+
+exports.usersDelete = async (req, res) => {
+    const { id } = req.params;
+    const result = await prisma.user.delete({
+        where: {
+            id: Number(id),
+        }
+    });
     res.json(result);
 };
