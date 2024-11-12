@@ -32,8 +32,12 @@ const validateUser = [
 const prisma = new PrismaClient();
 
 exports.usersAllGet = async (req, res) => {
-    const result = await prisma.user.findMany();
-    res.json(result);
+    if (req.isAuthenticated()) {
+        const result = await prisma.user.findMany();
+        res.json(result);
+    } else {
+        res.redirect("/auth/login");
+    }
 };
 
 exports.usersCreatePost = async (req, res) => {
@@ -55,33 +59,45 @@ exports.usersCreatePost = async (req, res) => {
 };
 
 exports.usersUpdatePost = async (req, res) => {
-    const { id } = req.params;
-    const { email } = req.body;
-    const result = await prisma.user.update({
-        where: {
-            id: Number(id),
-        },
-        data: {
-            email: email,
-        }
-    });
-    res.json(result);
+    if (req.isAuthenticated()) {
+        const { id } = req.params;
+        const { email } = req.body;
+        const result = await prisma.user.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+                email: email,
+            }
+        });
+        res.json(result);
+    } else {
+        res.redirect("/auth/login");
+    }
 };
 
 exports.usersSearchPost = async (req, res) => {
-    const { email } = req.body;
-    const result = await prisma.user.findUnique({
-        where: {email : email},
-    });
-    res.json(result);
+    if (req.isAuthenticated()) {
+        const { email } = req.body;
+        const result = await prisma.user.findUnique({
+            where: {email : email},
+        });
+        res.json(result);
+    } else {
+        res.redirect("/auth/login");
+    }
 };
 
 exports.usersDelete = async (req, res) => {
-    const { id } = req.params;
-    const result = await prisma.user.delete({
-        where: {
-            id: Number(id),
-        }
-    });
-    res.json(result);
+    if (req.isAuthenticated()) {
+        const { id } = req.params;
+        const result = await prisma.user.delete({
+            where: {
+                id: Number(id),
+            }
+        });
+        res.json(result);
+    } else {
+        res.redirect("/auth/login");
+    }
 };
