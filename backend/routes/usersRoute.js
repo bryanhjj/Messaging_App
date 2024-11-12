@@ -17,7 +17,7 @@ usersRouter.post( // new user sign-up
     "/signup",
     userController.usersCreatePost,
 )
-usersRouter.put( // udpate user details
+usersRouter.put( // update user details
     "/:userId",
     passport.authenticate("local", {failureRedirect: "/"}),
     userController.usersUpdatePost,
