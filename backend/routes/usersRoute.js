@@ -1,14 +1,16 @@
 const { Router } = require("express");
 const userController = require('../controllers/usersController');
+const { isAuth } = require("./isAuthMiddleware");
 const usersRouter = Router();
-const passport = require("../config/passport");
 
 usersRouter.get( // get all users
     "/", 
+    isAuth,
     userController.usersAllGet,
 );
 usersRouter.get( // search for specific user
     "/:userId",
+    isAuth,
     userController.usersSearchPost,
 );
 usersRouter.post( // new user sign-up
@@ -17,10 +19,12 @@ usersRouter.post( // new user sign-up
 )
 usersRouter.put( // update user details
     "/:userId",
+    isAuth,
     userController.usersUpdatePost,
 );
 usersRouter.delete( // delete a user account
     "/:userId",
+    isAuth,
     userController.usersDelete,
 );
 

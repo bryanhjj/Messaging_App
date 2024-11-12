@@ -32,12 +32,8 @@ const validateUser = [
 const prisma = new PrismaClient();
 
 exports.usersAllGet = async (req, res) => {
-    if (req.isAuthenticated()) {
-        const result = await prisma.user.findMany();
-        res.json(result);
-    } else {
-        res.redirect("/auth/login");
-    }
+    const result = await prisma.user.findMany();
+    res.json(result);
 };
 
 exports.usersCreatePost = async (req, res) => {
@@ -59,50 +55,39 @@ exports.usersCreatePost = async (req, res) => {
 };
 
 exports.usersUpdatePost = async (req, res) => {
-    if (req.isAuthenticated()) {
-        const { id } = req.params;
-        const { email } = req.body;
-        const result = await prisma.user.update({
+    const { id } = req.params;
+    const { email } = req.body;
+    const result = await prisma.user.update({
+        where: {
+            id: Number(id),
+        },
+        data: {
+            email: email,
+        }
+    });
+    res.json(result);
+};
+
+exports.usersSearchPost = async (req, res) => {
+    const { email } = req.body;
+    const result = await prisma.user.findUnique({
+        where: {email : email},
+    });
+    res.json(result);
+};
+
+exports.usersDelete = async (req, res) => {
+    const { id } = req.params;
+    // ensures that the current logged in user is that same as the about-to-be-deleted user before proceeding
+    if (req.user.id === id) {
+        const result = await prisma.user.delete({
             where: {
                 id: Number(id),
-            },
-            data: {
-                email: email,
             }
         });
         res.json(result);
     } else {
-        res.redirect("/auth/login");
-    }
-};
-
-exports.usersSearchPost = async (req, res) => {
-    if (req.isAuthenticated()) {
-        const { email } = req.body;
-        const result = await prisma.user.findUnique({
-            where: {email : email},
-        });
-        res.json(result);
-    } else {
-        res.redirect("/auth/login");
-    }
-};
-
-exports.usersDelete = async (req, res) => {
-    if (req.isAuthenticated()) {
-        const { id } = req.params;
-        if (res.locals.currentUser.id === id) {
-            const result = await prisma.user.delete({
-                where: {
-                    id: Number(id),
-                }
-            });
-            res.json(result);
-        } else {
-            res.statusMessage = "You are not authorized to perform this action.";
-            res.status(401).end();
-        }
-    } else {
-        res.redirect("/auth/login");
+        res.statusMessage = "You are not authorized to perform this action.";
+        res.status(401).end();
     }
 };
