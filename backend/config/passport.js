@@ -22,7 +22,7 @@ export default passport => {
     });
 
     passport.use(
-        async (email, password, done) => {
+        new LocalStrategy (async (email, password, done) => {
             const user = await prisma.user.findFirst(
                 { where: { email } },
             );
@@ -34,6 +34,5 @@ export default passport => {
                 return done(null, false, { message: "Incorrect password" });
             }
             return done(null, user);
-        });
-
+        }));
 };
