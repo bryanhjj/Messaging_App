@@ -3,7 +3,7 @@ const { Prisma, PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
 
-// res.locals.currentUser = req.user;
+// req.user;
 // do we want a validator?
 /*
 const validateUser = [
@@ -91,12 +91,17 @@ exports.usersSearchPost = async (req, res) => {
 exports.usersDelete = async (req, res) => {
     if (req.isAuthenticated()) {
         const { id } = req.params;
-        const result = await prisma.user.delete({
-            where: {
-                id: Number(id),
-            }
-        });
-        res.json(result);
+        if (res.locals.currentUser.id === id) {
+            const result = await prisma.user.delete({
+                where: {
+                    id: Number(id),
+                }
+            });
+            res.json(result);
+        } else {
+            res.statusMessage = "You are not authorized to perform this action.";
+            res.status(401).end();
+        }
     } else {
         res.redirect("/auth/login");
     }
