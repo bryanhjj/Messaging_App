@@ -1,6 +1,9 @@
 const { body, validationResult } = require("express-validator");
 const { Prisma, PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcryptjs');
+const LocalStrategy = require('passport-local').Strategy;
 
+// res.locals.currentUser = req.user;
 // do we want a validator?
 /*
 const validateUser = [
@@ -33,17 +36,22 @@ exports.usersAllGet = async (req, res) => {
     res.json(result);
 };
 
-// to implement bcryptjs into usersCreatePost
 exports.usersCreatePost = async (req, res) => {
-    const {username, email, password} = req.body;
-    const result = await prisma.user.create({
-        data: {
-            username,
-            email,
-            password
+    new LocalStrategy(bcrypt.hash(req.body.password, 8, async(err, hashedPassword) => {
+        if (err) {
+            return err;
+        } else {
+            const {username, email} = req.body;
+            const result = await prisma.user.create({
+                data: {
+                    username,
+                    email,
+                    password: hashedPassword,
+                }
+            });
+            res.json(result);
         }
-    });
-    res.json(result);
+    }));
 };
 
 exports.usersUpdatePost = async (req, res) => {
@@ -56,6 +64,14 @@ exports.usersUpdatePost = async (req, res) => {
         data: {
             email: email,
         }
+    });
+    res.json(result);
+};
+
+exports.usersSearchPost = async (req, res) => {
+    const { email } = req.body;
+    const result = await prisma.user.findUnique({
+        where: {email : email},
     });
     res.json(result);
 };
