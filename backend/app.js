@@ -5,6 +5,8 @@ const cors =  require('cors');
 const session = require("express-session");
 const usersRouter = require("./routes/usersRoute");
 const authRouter = require("./routes/authRoute");
+const messageRouter = require("./routes/messageRoute");
+const profileRouter = require("./routes/profileRoute");
 const passport = require("../config/passport");
 
 // remember to set up dotenv for session secret & etc
@@ -25,6 +27,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
+app.use("/message", messageRouter);
+app.use("/profile", profileRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));
