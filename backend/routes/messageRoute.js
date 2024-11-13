@@ -24,3 +24,5 @@ messageRouter.delete( // user deletes their message
     isAuth,
     messageController.messageDelete,
 );
+
+module.exports = messageRouter;
