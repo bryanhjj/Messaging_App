@@ -28,3 +28,42 @@ const validateUser = [
 */
 
 const prisma = new PrismaClient();
+
+exports.messageAllGet = async (req, res) => {
+    const result = await prisma.message.findMany();
+    res.json(result);
+};
+
+exports.messageSendPost = async (req, res) => {
+    const { content } = req.body;
+    const { chatroomId } = req.params;
+    const result = await prisma.message.create({
+        data: {
+            // allegedly we can just set the foreign key directly, let's try that
+            // else, https://www.prisma.io/docs/orm/reference/prisma-client-reference#connect
+            content,
+            chatroomId: chatroomId,
+            authorId: req.user.id,
+        },
+    });
+    res.json(result);
+};
+
+exports.messageEditPut = async (req, res) => {
+    const { messageId } = req.params;
+    const { content } = req.body;
+    const result = await prisma.message.update({
+        where: { id: messageId },
+        data: { content: content },
+    });
+    res.json(result);
+};
+
+// to implement a check to ensure that users can only delete their own messages
+exports.messageDelete = async (req, res) => {
+    const { messageId } = req.params;
+    const result = await prisma.message.delete({
+        where: { id: messageId },
+    });
+    res.json(result);
+};

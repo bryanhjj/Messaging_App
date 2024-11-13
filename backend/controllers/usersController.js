@@ -55,11 +55,11 @@ exports.usersCreatePost = async (req, res) => {
 };
 
 exports.usersUpdatePost = async (req, res) => {
-    const { id } = req.params;
+    const { userId } = req.params;
     const { email } = req.body;
     const result = await prisma.user.update({
         where: {
-            id: Number(id),
+            id: Number(userId),
         },
         data: {
             email: email,
@@ -77,12 +77,12 @@ exports.usersSearchPost = async (req, res) => {
 };
 
 exports.usersDelete = async (req, res) => {
-    const { id } = req.params;
+    const { userId } = req.params;
     // ensures that the current logged in user is that same as the about-to-be-deleted user before proceeding
-    if (req.user.id === id) {
+    if (req.user.id === userId) {
         const result = await prisma.user.delete({
             where: {
-                id: Number(id),
+                id: Number(userId),
             }
         });
         res.json(result);
