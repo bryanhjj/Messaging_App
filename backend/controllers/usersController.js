@@ -54,7 +54,7 @@ exports.usersCreatePost = async (req, res) => {
     }));
 };
 
-exports.usersUpdatePost = async (req, res) => {
+exports.usersUpdatePut = async (req, res) => {
     const { userId } = req.params;
     const { email } = req.body;
     const result = await prisma.user.update({
@@ -68,7 +68,7 @@ exports.usersUpdatePost = async (req, res) => {
     res.json(result);
 };
 
-exports.usersSearchPost = async (req, res) => {
+exports.usersSearchGet = async (req, res) => {
     const { email } = req.body;
     const result = await prisma.user.findUnique({
         where: {email : email},

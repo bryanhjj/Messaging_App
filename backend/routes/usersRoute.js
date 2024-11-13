@@ -11,7 +11,7 @@ usersRouter.get( // get all users
 usersRouter.get( // search for specific user
     "/:userId",
     isAuth,
-    userController.usersSearchPost,
+    userController.usersSearchGet,
 );
 usersRouter.post( // new user sign-up
     "/signup",
@@ -20,7 +20,7 @@ usersRouter.post( // new user sign-up
 usersRouter.put( // update user details
     "/:userId",
     isAuth,
-    userController.usersUpdatePost,
+    userController.usersUpdatePut,
 );
 usersRouter.delete( // delete a user account
     "/:userId",
