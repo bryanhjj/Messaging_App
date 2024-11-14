@@ -13,4 +13,6 @@ profileRouter.get( // get specific profile
     "/:profileId",
     isAuth,
     profileController.specificProfileGet,
-)
+);
+
+module.exports = profileRouter;
