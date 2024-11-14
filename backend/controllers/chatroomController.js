@@ -10,7 +10,9 @@ exports.allChatroomGet = async (req, res) => {
 exports.userChatroomGet = async (req, res) => {
     const result = await prisma.chatroom.findMany({
         where: { users: {
-                    some: { id: req.user.id }
+                    some: { 
+                        id: req.user.id,
+                    },
                 },
                 select: {
                     id: true,
