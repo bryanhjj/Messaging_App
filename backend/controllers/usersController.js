@@ -47,7 +47,14 @@ exports.usersCreatePost = async (req, res) => {
                     username,
                     email,
                     password: hashedPassword,
-                }
+                    profile: { // creates a profile when a user registers
+                        create: [
+                            { 
+                                bio: "Insert bio here." 
+                            },
+                        ] 
+                    },
+                },
             });
             res.json(result);
         }
