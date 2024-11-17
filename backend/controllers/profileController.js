@@ -23,4 +23,4 @@ exports.editProfilePut = async (req, res) => {
         data: { bio: bio },
     });
     res.json(result);
-}
+};
