@@ -14,3 +14,13 @@ exports.specificProfileGet = async (req, res) => {
     });
     res.json(result);
 };
+
+exports.editProfilePut = async (req, res) => {
+    const { profileId } = req.params;
+    const { bio } = req.body;
+    const result = await prisma.profile.update({
+        where: { id: profileId },
+        data: { bio: bio },
+    });
+    res.json(result);
+}
