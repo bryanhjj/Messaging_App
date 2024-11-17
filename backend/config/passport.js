@@ -25,7 +25,7 @@ export default passport => {
     passport.use(
         new LocalStrategy (async (email, password, done) => {
             const user = await prisma.user.findFirst(
-                { where: { email } },
+                { where: { email: email } },
             );
             const match = await bcrypt.compare(password, user.password);
             if (!user) {

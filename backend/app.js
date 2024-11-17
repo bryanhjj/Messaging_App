@@ -11,7 +11,6 @@ const profileRouter = require("./routes/profileRoute");
 const chatroomRouter = require("./routes/chatroomRoute");
 const passport = require("../config/passport");
 
-// remember to set up dotenv for session secret & etc
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(session({ 
@@ -40,5 +39,4 @@ app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));
 ------------------     TO DO LIST      ------------------
 3)    (Optional, extra credit) implement a friendlist system
 6)    test shit
-
 */
