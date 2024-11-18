@@ -6,6 +6,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/frontend/src/components/NavBar/reference.jsx
 
 # testing
 /coverage
