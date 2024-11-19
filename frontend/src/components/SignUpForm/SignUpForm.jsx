@@ -1,9 +1,8 @@
-import { useEffect, useState, Form, useLoaderData } from "react";
+import { useEffect, useState, Form } from "react";
 
 // some mui icon
 
 export function SignUpForm () {
-    const { signUpUser } = useLoaderData();
 
     return(
         <Form method="post" id="signup-form">
@@ -14,7 +13,6 @@ export function SignUpForm () {
                     aria-label="Username"
                     type="text"
                     name="username"
-                    defaultValue={ signUpUser?.username }
                 />
             </label>
             <label>
@@ -24,7 +22,6 @@ export function SignUpForm () {
                     aria-label="Email"
                     type="email"
                     name="email"
-                    defaultValue={ signUpUser?.email }
                 />
             </label>
             <label>
@@ -33,7 +30,6 @@ export function SignUpForm () {
                     placeholder="Insert your bio here."
                     rows={ 3 }
                     name="bio"
-                    defaultValue={ signUpUser?.bio }
                 />
             </label>
             <label>
@@ -41,7 +37,7 @@ export function SignUpForm () {
                 <input
                     placeholder="Insert your password here."
                     aria-label="Password"
-                    type="text"
+                    type="password"
                     name="password"
                 />
             </label>
