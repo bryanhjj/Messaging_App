@@ -25,7 +25,7 @@ export function SignUpForm () {
     };
 
     return(
-        <form method="post" id="signup-form" onSubmit={handleOnSignUp} ref={signUpForm}>
+        <form id="signup-form" onSubmit={handleOnSignUp} ref={signUpForm}>
             <label>
                 <span>Username: </span>
                 <input
