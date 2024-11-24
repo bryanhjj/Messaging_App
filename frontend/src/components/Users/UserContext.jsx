@@ -1,11 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 
-export const UserContext = createContext();
+export const UserContext = createContext(null);
 
-const Context = ({children}) => {
-    const [user, setUser] = useState(() => ({
-        loggedIn: false,
-    }));
+const UserProvider = ({children}) => {
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         fetch(`${API_URL}/auth/user`, { credentials: "include" })
@@ -15,7 +13,11 @@ const Context = ({children}) => {
         });
     }, []);
 
-    return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+    return (
+        <UserContext.Provider value={[user, setUser]}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
-export default Context;
+export default UserProvider;

@@ -1,9 +1,11 @@
-import { useEffect, useState, Form, useLoaderData, useRef } from "react";
+import { useRef, useContext } from "react";
+import UserContext from "./UserContext";
 
 // some mui icon
 
 export function LoginForm () {
     const loginForm = useRef(null);
+    const [user, setUser] = useContext(UserContext);
 
     async function handleOnLogin (e) {
         e.preventDefault();
@@ -16,6 +18,7 @@ export function LoginForm () {
                 },
                 body: JSON.stringify(formData),
             });
+            setUser(result); // look into what's returned to us from the API and work from there
             if (!result.ok) {
                 throw new Error('Login failed');
             };
