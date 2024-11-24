@@ -1,10 +1,31 @@
-import { useEffect, useState, Form, useLoaderData } from "react";
+import { useEffect, useState, Form, useLoaderData, useRef } from "react";
 
 // some mui icon
 
 export function LoginForm () {
+    const loginForm = useRef(null);
+
+    async function handleOnLogin (e) {
+        e.preventDefault();
+        try {
+            const formData = new FormData(loginForm.current);
+            const result = await fetch(`${API_URL}/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+            if (!result.ok) {
+                throw new Error('Login failed');
+            };
+        } catch(err) {
+            console.log(err);
+        }
+    };
+
     return (
-        <Form>
+        <form id="login-form" ref={loginForm} onSubmit={handleOnLogin}>
             <label>
                 <span>Email: </span>
                 <input
@@ -26,6 +47,6 @@ export function LoginForm () {
             <div>
                 <button type="submit">Login</button>
             </div>
-        </Form>
+        </form>
     );
 };
