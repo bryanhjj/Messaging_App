@@ -1,11 +1,31 @@
-import { useEffect, useState, Form } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // some mui icon
 
 export function SignUpForm () {
+    const signUpForm = useRef(null);
+
+    async function handleOnSignUp (e) {
+        e.preventDefault();
+        try {
+            const formData = new FormData(signUpForm.current);
+            const result = await fetch(`${API_URL}/users/signup`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+            if (!result.ok) {
+                throw new Error('Registration failed');
+            };
+        } catch(err) {
+            console.log(err); // get better error handling
+        }
+    };
 
     return(
-        <Form method="post" id="signup-form">
+        <form method="post" id="signup-form" onSubmit={handleOnSignUp} ref={signUpForm}>
             <label>
                 <span>Username: </span>
                 <input
@@ -44,6 +64,6 @@ export function SignUpForm () {
             <div>
                 <button type="submit">Sign Up</button>
             </div>
-        </Form>
+        </form>
     );
 };
