@@ -7,7 +7,7 @@ const authRouter = express.Router();
 authRouter.post("/login", passport.authenticate("local", {failureRedirect: "/", successRedirect: "/"}));
 
 // user logout
-authRouter.get("/logout", (req, res, next) => {
+authRouter.post("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
