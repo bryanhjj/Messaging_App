@@ -1,13 +1,15 @@
-import { useEffect, useState, Form } from "react";
+import { useState, useContext } from "react";
+import UserContext from '../Users/UserContext';
 
 // maybe some mui stuff
 
-export function ChatInput (user, chatroomId) {
+export function ChatInput (chatroomId) {
     const [newMessage, setNewMessage] = useState([]);
+    const [user] = useContext(UserContext);
 
-    const handleSendMessage = async () => {
+    async function handleSendMessage() {
         try {
-            const result = await fetch(`${API_URL}/message/:chatroomId`, // update URL
+            const result = await fetch(`${API_URL}/message/${chatroomId}`,
                 {
                     method: "POST",
                     body: {
@@ -17,13 +19,16 @@ export function ChatInput (user, chatroomId) {
                     },
                 }
             );
+            if (!result.ok) {
+                throw new Error('Unable to send message.');
+            };
         } catch (err) {
             console.log(err.message); // update and use a better error handler
         }
-    };
+    }
 
     return (
-        <Form method="post" id="chat-input-form" onSubmit={handleSendMessage}>
+        <form method="post" id="chat-input-form" onSubmit={handleSendMessage}>
             <div id="input-container">
                 <input
                     type="text"
@@ -32,6 +37,6 @@ export function ChatInput (user, chatroomId) {
                 />
                 <button type="submit">Send</button>
             </div>
-        </Form>
+        </form>
     );
 };
