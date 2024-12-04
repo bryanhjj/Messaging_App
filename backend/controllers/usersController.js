@@ -70,9 +70,9 @@ exports.usersUpdatePut = async (req, res) => {
 };
 
 exports.usersSearchGet = async (req, res) => {
-    const { email } = req.body;
+    const { username } = req.body; // searches based on username
     const result = await prisma.user.findUnique({
-        where: {email : email},
+        where: {username : username},
     });
     res.json(result);
 };

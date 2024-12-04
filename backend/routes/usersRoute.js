@@ -8,8 +8,8 @@ usersRouter.get( // get all users
     isAuth,
     userController.usersAllGet,
 );
-usersRouter.get( // search for specific user
-    "/:userId",
+usersRouter.get( // search for specific user via username
+    "/search",
     isAuth,
     userController.usersSearchGet,
 );
