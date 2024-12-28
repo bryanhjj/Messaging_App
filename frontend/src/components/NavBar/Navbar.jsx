@@ -1,43 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { useState } from "react";
 import styles from "./Navbar.module.css";
 
 // get some mui icons
 
 export function Navbar () {
     const [isExpanded, setIsExpanded] = useState(false);
-
     const expandMenu = () => setIsExpanded(true);
     const collapseMenu = () => setIsExpanded(false);
 
     return (
-        <nav className={styles.nav}>
+        <nav className="sidebar">
           {/* Mobile only. This button will open the menu */}
           <button
-                className={styles.menuToggle}
+                className="menuToggle"
                 aria-label="open-menu"
-                aria-expanded={isExpanded}
                 onClick={expandMenu}
           >
-            <span className={styles.hamburger}>Insert MUI icon here</span>
+            <span className="">Insert MUI icon here</span>
           </button>
           <div
-            className={`${isExpanded ? styles.mobileNav : styles.navListWrapper}`}
+            className={`${isExpanded ? "expanded" : "not-expanded"}`}
           >
             <button
-                className={styles.menuToggleOff}
+                className="close-button"
                 onClick={collapseMenu}
                 aria-label="close-menu"
             >
               X
             </button>
-            <ul className={styles.navList}>
+            <ul className="link-container">
                 <li>
                     <Link
                         onClick={collapseMenu}
-                        className={styles.navLink}
+                        className="link"
                         to="/profile"
                     >
                         Profile
@@ -46,16 +42,7 @@ export function Navbar () {
               <li>
                     <Link
                         onClick={collapseMenu}
-                        className={styles.navLink}
-                        to="/friends"
-                    >
-                        Friends
-                    </Link>
-              </li>
-              <li>
-                    <Link
-                        onClick={collapseMenu}
-                        className={styles.navLink}
+                        className="link"
                         to="/users"
                     >
                         User setting
@@ -65,8 +52,4 @@ export function Navbar () {
           </div>
         </nav>
       );
-};
-
-Navbar.propTypes = {
-    userImg: PropTypes.string,
 };
