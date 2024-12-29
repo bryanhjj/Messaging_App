@@ -9,9 +9,14 @@ usersRouter.get( // get all users
     userController.usersAllGet,
 );
 usersRouter.get( // search for specific user via username
-    "/search",
+    "/searchName",
     isAuth,
-    userController.usersSearchGet,
+    userController.usersSearchNameGet,
+);
+usersRouter.get( // search for specific user via id
+    "/searchId",
+    isAuth,
+    userController.usersSearchIdGet,
 );
 usersRouter.post( // new user sign-up
     "/signup",

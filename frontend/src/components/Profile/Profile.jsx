@@ -16,7 +16,7 @@ export function Profile () {
 
     const getTargetUserInfo = async (profileUserID) => {
         try {
-            const result = await fetch(`${API_URL}/users/search`, {
+            const result = await fetch(`${API_URL}/users/searchId`, {
               headers: "GET",
               body: {
                 id: profileUserID,
@@ -53,9 +53,13 @@ export function Profile () {
                 <h2>Bio: </h2>
                 <p>{targetUser.bio}</p>
             </div>
-            <form onSubmit={handleStartChat(targetUser)}>
-                <button type="submit">Send Message</button>
-            </form>
+            { user.id === targetUser.id ? 
+                <></>
+            : 
+                <form onSubmit={handleStartChat(targetUser)}>
+                    <button type="submit">Send Message</button>
+                </form>
+            }
         </div>
     );
 };

@@ -69,10 +69,18 @@ exports.usersUpdatePut = async (req, res) => {
     res.json(result);
 };
 
-exports.usersSearchGet = async (req, res) => {
+exports.usersSearchNameGet = async (req, res) => {
     const { username } = req.body; // searches based on username
     const result = await prisma.user.findUnique({
         where: {username : username},
+    });
+    res.json(result);
+};
+
+exports.usersSearchIdGet = async (req, res) => {
+    const { id } = req.body; // searches based on id
+    const result = await prisma.user.findUnique({
+        where: {id : id},
     });
     res.json(result);
 };
