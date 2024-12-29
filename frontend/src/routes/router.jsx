@@ -1,48 +1,55 @@
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Navbar from "../components/NavBar/Navbar";
+import ErrorPage from "../components/ErrorPage/error-page";
+import Dashboard from "../components/Dashboard/Dashboard";
+import Chatroom from "../components/Chatroom/Chatroom";
+import Profile from "../components/Profile/Profile";
+import SignUpForm from "../components/SignUp/SignUpForm";
+import LoginForm from "../components/Login/LoginForm";
+import UserUpdateForm from "../components/Users/UserUpdateForm";
+import UserDeleteForm from "../components/Users/UserDeleteForm";
 
 const router = createBrowserRouter([
     {
       path: "/",
-      element: <Root />,
+      element: <Navbar />,
       errorElement: <ErrorPage />,
-      loader: rootLoader,
-      action: rootAction,
       children: [
         {
           errorElement: <ErrorPage />,
           children: [
             {
               index: true,
-              element: <Index />,
+              element: <Dashboard />,
             },
             {
-              path: "contacts/:contactId",
-              element: <Contact />,
-              loader: contactLoader,
-              action: contactAction,
+              path: "chatroom/:chatroomId",
+              element: <Chatroom />,
             },
             {
-              path: "contacts/:contactId/edit",
-              element: <EditContact />,
-              loader: contactLoader, // p.s. tutorial is just being lazy, we don't usually share loaders
-              action: editAction,
+              path: "profile/:profileId",
+              element: <Profile />,
             },
             {
-              path: "contacts/:contactId/destroy",
-              action: destroyAction,
-              errorElement: <div>Oops! There was an error.</div>,
-            }
+              path: "user/edit",
+              element: <UserUpdateForm />,
+            },
+            {
+              path: "user/delete",
+              element: <UserDeleteForm />,
+            },
+            {
+              path: "signup",
+              element: <SignUpForm />,
+            },
+            {
+              path: "login",
+              element: <LoginForm />,
+            },
           ], 
         },
       ],
     },
 ]);
   
-createRoot(document.getElementById('root')).render(
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>,
-);
+export default router;

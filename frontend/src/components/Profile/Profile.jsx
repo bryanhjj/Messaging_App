@@ -1,24 +1,25 @@
-import { useRef, useContext, useEffect, useState } from "react";
+import { useRef, useContext, useEffect, useState, useParams } from "react";
 import UserContext from "./UserContext";
 
 // insert mui stuff here
 
 // maybe friend system here too
 
-export function Profile (username) {
+export function Profile () {
+    let {profileUserID} = useParams();
     const [user] = useContext(UserContext);
     const [targetUser, setTargetUser] = useState(null);
 
     useEffect(() => {
-        getTargetUserInfo(username);
+        getTargetUserInfo(profileUserID);
     }, []);
 
-    const getTargetUserInfo = async (username) => {
+    const getTargetUserInfo = async (profileUserID) => {
         try {
             const result = await fetch(`${API_URL}/users/search`, {
               headers: "GET",
               body: {
-                username: username,
+                id: profileUserID,
               }
             });
             setTargetUser(result);

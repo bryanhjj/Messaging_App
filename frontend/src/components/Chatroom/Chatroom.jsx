@@ -1,9 +1,10 @@
-import { useEffect, useState, Form, useNavigate } from "react";
+import { useEffect, useState, Form, useNavigate, useParams } from "react";
 import { ChatInput } from "./ChatInput";
 
 // get some mui stuff
 
-export function Chatroom (chatroomId) {
+export function Chatroom () {
+    let chatroomId = useParams();
     const navigate = useNavigate();
     const [chatlog, setChatlog] = useState([]);
 

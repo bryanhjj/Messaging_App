@@ -4,7 +4,6 @@ import UserContext from "./UserContext";
 // get mui stuff in here
 
 export function UserUpdateForm () {
-    // const { user } = useLoaderData();
     const [user] = useContext(UserContext);
     const updateForm = useRef(null);
 
