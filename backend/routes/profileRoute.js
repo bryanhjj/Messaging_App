@@ -1,18 +1,18 @@
-const { Router } = require("express");
-const profileController = require("../controllers/profileController");
-const { isAuth } = require("./isAuthMiddleware");
+import express from "express";
+import { allProfileGet, specificProfileGet, editProfilePut} from "../controllers/profileController.js";
+import isAuth from "./isAuthMiddleware.js";
 
-const profileRouter = Router();
+const profileRouter = express.Router();
 
 profileRouter.get( // get all profiles
     "/",
     isAuth,
-    profileController.allProfileGet,
+    allProfileGet,
 );
 profileRouter.get( // get specific profile
     "/:profileId",
     isAuth,
-    profileController.specificProfileGet,
+    specificProfileGet,
 );
 
-module.exports = profileRouter;
+export default profileRouter;

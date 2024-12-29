@@ -1,36 +1,43 @@
-const { Router } = require("express");
-const userController = require('../controllers/usersController');
-const { isAuth } = require("./isAuthMiddleware");
-const usersRouter = Router();
+import express from "express";
+import {
+    usersAllGet, 
+    usersSearchNameGet, 
+    usersSearchIdGet, 
+    usersCreatePost, 
+    usersUpdatePut, 
+    usersDelete
+} from '../controllers/usersController.js';
+import isAuth from "./isAuthMiddleware.js";
+const usersRouter = express.Router();
 
 usersRouter.get( // get all users
     "/", 
     isAuth,
-    userController.usersAllGet,
+    usersAllGet,
 );
 usersRouter.get( // search for specific user via username
     "/searchName",
     isAuth,
-    userController.usersSearchNameGet,
+    usersSearchNameGet,
 );
 usersRouter.get( // search for specific user via id
     "/searchId",
     isAuth,
-    userController.usersSearchIdGet,
+    usersSearchIdGet,
 );
 usersRouter.post( // new user sign-up
     "/signup",
-    userController.usersCreatePost,
+    usersCreatePost,
 )
 usersRouter.put( // update user details
     "/:userId",
     isAuth,
-    userController.usersUpdatePut,
+    usersUpdatePut,
 );
 usersRouter.delete( // delete a user account
     "/:userId",
     isAuth,
-    userController.usersDelete,
+    usersDelete,
 );
 
-module.exports = usersRouter;
+export default usersRouter;

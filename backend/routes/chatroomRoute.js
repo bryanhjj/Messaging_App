@@ -1,38 +1,45 @@
-const { Router } = require("express");
-const { isAuth } = require("./isAuthMiddleware");
-const chatroomController = require("../controllers/chatroomController");
+import { Router } from "express";
+import isAuth from "./isAuthMiddleware.js";
+import {
+    allChatroomGet,
+    userChatroomGet,
+    chatroomCreatePost,
+    addChatroomUserPut,
+    removeChatroomUserPut,
+    chatroomDelete,
+} from "../controllers/chatroomController.js";
 
 const chatroomRouter = Router();
 
 chatroomRouter.get( // get every single chatroom
     "/",
     isAuth,
-    chatroomController.allChatroomGet,
+    allChatroomGet,
 );
 chatroomRouter.get( // get current logged in user's chatrooms
     "/dashboard",
     isAuth,
-    chatroomController.userChatroomGet,
+    userChatroomGet,
 );
 chatroomRouter.post( // make a new chatroom
     "/dashboard",
     isAuth,
-    chatroomController.chatroomCreatePost,
+    chatroomCreatePost,
 );
 chatroomRouter.put( // adds a new user to an existing chatroom
     "/join/:chatroomId",
     isAuth,
-    chatroomController.addChatroomUserPut,
+    addChatroomUserPut,
 );
 chatroomRouter.put( // user leaves a chatroom
     "/leave/:chatroomId",
     isAuth,
-    chatroomController.removeChatroomUserPut,
+    removeChatroomUserPut,
 );
 chatroomRouter.delete( // deletes a chatroom
     "/:chatroomId",
     isAuth,
-    chatroomController.chatroomDelete,
+    chatroomDelete,
 );
 
-module.exports = chatroomRouter;
+export default chatroomRouter;

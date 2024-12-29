@@ -1,7 +1,7 @@
-const { body, validationResult } = require("express-validator");
-const { Prisma, PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcryptjs');
-const LocalStrategy = require('passport-local').Strategy;
+import { body, validationResult } from "express-validator";
+import { Prisma, PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+import { Strategy as LocalStrategy } from "passport-local";
 
 const validateUser = [
     body("username")
@@ -22,12 +22,12 @@ const validateUser = [
 
 const prisma = new PrismaClient();
 
-exports.usersAllGet = async (req, res) => {
+const usersAllGet = async(req, res) => {
     const result = await prisma.user.findMany();
     res.json(result);
 };
 
-exports.usersCreatePost = [
+const usersCreatePost = [
     validateUser,
     async (req, res) => {
         new LocalStrategy(bcrypt.hash(req.body.password, 8, async(err, hashedPassword) => {
@@ -55,7 +55,7 @@ exports.usersCreatePost = [
     }
 ];
 
-exports.usersUpdatePut = async (req, res) => {
+const usersUpdatePut = async (req, res) => {
     const { userId } = req.params;
     const { email } = req.body;
     const result = await prisma.user.update({
@@ -69,7 +69,7 @@ exports.usersUpdatePut = async (req, res) => {
     res.json(result);
 };
 
-exports.usersSearchNameGet = async (req, res) => {
+const usersSearchNameGet = async (req, res) => {
     const { username } = req.body; // searches based on username
     const result = await prisma.user.findUnique({
         where: {username : username},
@@ -77,7 +77,7 @@ exports.usersSearchNameGet = async (req, res) => {
     res.json(result);
 };
 
-exports.usersSearchIdGet = async (req, res) => {
+const usersSearchIdGet = async (req, res) => {
     const { id } = req.body; // searches based on id
     const result = await prisma.user.findUnique({
         where: {id : id},
@@ -85,7 +85,7 @@ exports.usersSearchIdGet = async (req, res) => {
     res.json(result);
 };
 
-exports.usersDelete = async (req, res) => {
+const usersDelete = async (req, res) => {
     const { userId } = req.params;
     // ensures that the current logged in user is that same as the about-to-be-deleted user before proceeding
     if (req.user.id === userId) {
@@ -99,4 +99,13 @@ exports.usersDelete = async (req, res) => {
         res.statusMessage = "You are not authorized to perform this action.";
         res.status(401).end();
     }
+};
+
+export {
+    usersAllGet, 
+    usersSearchNameGet, 
+    usersSearchIdGet, 
+    usersCreatePost, 
+    usersUpdatePut, 
+    usersDelete
 };

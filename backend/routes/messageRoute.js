@@ -1,28 +1,28 @@
-const { Router } = require("express");
-const messageController = require('../controllers/messageController');
-const { isAuth } = require("./isAuthMiddleware");
+import { Router } from "express";
+import { messageAllGet, messageSendPost, messageEditPut, messageDelete} from '../controllers/messageController.js';
+import isAuth from "./isAuthMiddleware.js";
 
 const messageRouter = Router();
 
-messageRouter.get( // gets every message in a chatroom
+messageRouter.get( // gets every message
     "/:chatroomId",
     isAuth,
-    messageController, // yet to be implemented
+    messageAllGet, 
 );
 messageRouter.post( // user sends a message to a chatroom
     "/:chatroomId", 
     isAuth, 
-    messageController.messageSendPost,
+    messageSendPost,
 );
 messageRouter.put( // user edits their message
     "/:chatroomId/:messageId",
     isAuth,
-    messageController.messageEditPut,
+    messageEditPut,
 );
 messageRouter.delete( // user deletes their message
     "/:chatroomId/:messageId",
     isAuth,
-    messageController.messageDelete,
+    messageDelete,
 );
 
-module.exports = messageRouter;
+export default messageRouter;

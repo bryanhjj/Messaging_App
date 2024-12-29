@@ -1,15 +1,16 @@
 // let's try postgreSQL (hosted via Neon) and Prisma ORM for this project
-const express = require("express");
-require('dotenv').config()
+import express from "express";
+import 'dotenv/config'
+import cors from "cors";
+import session from "express-session";
+import passport from "./config/passport.js";
+import usersRouter from "./routes/usersRoute.js";
+import authRouter from "./routes/authRoute.js";
+import messageRouter from "./routes/messageRoute.js";
+import profileRouter from "./routes/profileRoute.js";
+import chatroomRouter from "./routes/chatroomRoute.js";
+
 const app = express();
-const cors =  require('cors');
-const session = require("express-session");
-const usersRouter = require("./routes/usersRoute");
-const authRouter = require("./routes/authRoute");
-const messageRouter = require("./routes/messageRoute");
-const profileRouter = require("./routes/profileRoute");
-const chatroomRouter = require("./routes/chatroomRoute");
-const passport = require("../config/passport");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -17,7 +18,6 @@ app.use(session({
   secret: process.env.SESSION_SECRET, 
   resave: false, 
   saveUninitialized: true, // keep an eye on saveUnin, store, and cookie
-  store: sessionStorage,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // ie. 1 day
     secure: true,

@@ -1,5 +1,5 @@
-const { body, validationResult } = require("express-validator");
-const { Prisma, PrismaClient } = require('@prisma/client');
+import { body, validationResult } from "express-validator";
+import { Prisma, PrismaClient } from '@prisma/client';
 
 // req.user;
 // do we want a validator?
@@ -29,12 +29,12 @@ const validateUser = [
 
 const prisma = new PrismaClient();
 
-exports.messageAllGet = async (req, res) => {
+export const messageAllGet = async (req, res) => {
     const result = await prisma.message.findMany();
     res.json(result);
 };
 
-exports.messageSendPost = async (req, res) => {
+export const messageSendPost = async (req, res) => {
     const { content } = req.body;
     const { chatroomId } = req.params;
     const result = await prisma.message.create({
@@ -49,7 +49,7 @@ exports.messageSendPost = async (req, res) => {
     res.json(result);
 };
 
-exports.messageEditPut = async (req, res) => {
+export const messageEditPut = async (req, res) => {
     const { messageId } = req.params;
     const { content } = req.body;
     const result = await prisma.message.update({
@@ -60,7 +60,7 @@ exports.messageEditPut = async (req, res) => {
 };
 
 // to implement a check to ensure that users can only delete their own messages
-exports.messageDelete = async (req, res) => {
+export const messageDelete = async (req, res) => {
     const { messageId } = req.params;
     const result = await prisma.message.delete({
         where: { id: messageId },

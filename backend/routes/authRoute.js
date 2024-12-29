@@ -1,7 +1,6 @@
-const express = require('express');
-const passport = require("../config/passport");
-
-const authRouter = express.Router();
+import { Router } from "express";
+import passport from "../config/passport.js";
+const authRouter = Router();
 
 // user login
 authRouter.post("/login", passport.authenticate("local", {failureRedirect: "/", successRedirect: "/"}));
@@ -21,4 +20,4 @@ authRouter.get("/user", (req, res) => {
   res.status(200).json({ user: req.user });
 });
 
-module.exports = authRouter;
+export default authRouter;

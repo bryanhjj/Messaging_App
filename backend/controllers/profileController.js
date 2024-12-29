@@ -1,13 +1,12 @@
-const { Prisma, PrismaClient } = require('@prisma/client');
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-exports.allProfileGet = async (req, res) => {
+export const allProfileGet = async (req, res) => {
     const result = await prisma.profile.findMany();
     res.json(result);
 };
-
-exports.specificProfileGet = async (req, res) => {
+export const specificProfileGet = async (req, res) => {
     const { profileId } = req.params;
     const result = await prisma.profile.findFirst({
         where: { id: profileId },
@@ -15,7 +14,7 @@ exports.specificProfileGet = async (req, res) => {
     res.json(result);
 };
 
-exports.editProfilePut = async (req, res) => {
+export const editProfilePut = async (req, res) => {
     const { profileId } = req.params;
     const { bio } = req.body;
     const result = await prisma.profile.update({
