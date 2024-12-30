@@ -17,13 +17,12 @@ app.use(cors());
 app.use(session({ 
   secret: process.env.SESSION_SECRET, 
   resave: false, 
-  saveUninitialized: true, // keep an eye on saveUnin, store, and cookie
+  saveUninitialized: true,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // ie. 1 day
     secure: true,
   },
 }));
-app.use(passport.authenticate("session"));
 app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.initialize());

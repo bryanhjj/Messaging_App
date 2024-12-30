@@ -1,7 +1,6 @@
 import { body, validationResult } from "express-validator";
 import { Prisma, PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { Strategy as LocalStrategy } from "passport-local";
 
 const validateUser = [
     body("username")
@@ -27,33 +26,31 @@ const usersAllGet = async(req, res) => {
     res.json(result);
 };
 
-const usersCreatePost = [
-    validateUser,
+const usersCreatePost = 
     async (req, res) => {
-        new LocalStrategy(bcrypt.hash(req.body.password, 8, async(err, hashedPassword) => {
+        bcrypt.hash(req.body.password, 8, async(err, hashedPassword) => {
             if (err) {
                 return err;
             } else {
                 const {username, email, bio} = req.body;
                 const result = await prisma.user.create({
                     data: {
-                        username,
-                        email,
+                        username: username,
+                        email: email,
                         password: hashedPassword,
                         profile: { // creates a profile when a user registers
-                            create: [
-                                { 
-                                    bio: bio, 
-                                },
-                            ] 
+                            create: 
+                                { bio: bio, },
                         },
                     },
+                    include: {
+                        profile: true,
+                    }
                 });
                 res.json(result);
             }
-        }));
-    }
-];
+        });
+};
 
 const usersUpdatePut = async (req, res) => {
     const { userId } = req.params;
