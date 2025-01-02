@@ -23,6 +23,7 @@ passport.use(
                 if (!match) {
                     return done(null, false, { message: "Incorrect password" });
                 }
+                console.log("Login successful.")
                 return done(null, user);
             } catch (err) {
                 console.error("Error during local authentication:", err);
@@ -36,12 +37,12 @@ passport.serializeUser((user, done) => {
     done(null, { userId: user.id, username: user.username });
 });
     
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (user, done) => {
     try {
-        const user = await prisma.user.findFirst(
-            { where: { id } },
+        const userD = await prisma.user.findFirst(
+            { where: { id: user.id } },
         );
-        done(null, user);
+        done(null, userD);
     } catch(err) {
         done(err);
     }

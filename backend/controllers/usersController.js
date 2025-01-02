@@ -1,23 +1,5 @@
-import { body, validationResult } from "express-validator";
 import { Prisma, PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-
-const validateUser = [
-    body("username")
-        .trim()
-        .notEmpty().withMessage("Username is required.")
-        .escape(),
-    body("password")
-        .trim()
-        .notEmpty().withMessage("Password is required."),
-    body("email")
-        .trim()
-        .notEmpty()
-        .isEmail().withMessage("Must be an email."),
-    body("bio")
-        .optional()
-        .trim(),
-];
 
 const prisma = new PrismaClient();
 
@@ -57,7 +39,7 @@ const usersUpdatePut = async (req, res) => {
     const { email } = req.body;
     const result = await prisma.user.update({
         where: {
-            id: Number(userId),
+            id: userId,
         },
         data: {
             email: email,
@@ -88,7 +70,7 @@ const usersDelete = async (req, res) => {
     if (req.user.id === userId) {
         const result = await prisma.user.delete({
             where: {
-                id: Number(userId),
+                id: userId,
             }
         });
         res.json(result);
