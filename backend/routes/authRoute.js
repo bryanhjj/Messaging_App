@@ -3,7 +3,7 @@ import passport from "../config/passport.js";
 const authRouter = Router();
 
 // user login
-authRouter.post("/login", passport.authenticate("local", {failureRedirect: "/auth/login", successRedirect: "/"}));
+authRouter.post("/login", passport.authenticate("local", {failureRedirect: "/login", successRedirect: "/"}));
 
 // user logout
 authRouter.post("/logout", (req, res, next) => {

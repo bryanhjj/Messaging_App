@@ -13,7 +13,7 @@ passport.use(
         },
         async (email, password, done) => {
             try {
-                const user = await prisma.user.findFirst(
+                const user = await prisma.user.findUnique(
                     { where: { email: email }, }
                 );
                 if (!user) {
@@ -23,7 +23,7 @@ passport.use(
                 if (!match) {
                     return done(null, false, { message: "Incorrect password" });
                 }
-                console.log("Login successful.")
+                console.log("Login successful. Welcome ", user.username);
                 return done(null, user);
             } catch (err) {
                 console.error("Error during local authentication:", err);
@@ -34,15 +34,15 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-    done(null, { userId: user.id, username: user.username });
+    done(null, user.id);
 });
     
-passport.deserializeUser(async (user, done) => {
+passport.deserializeUser(async (id, done) => {
     try {
-        const userD = await prisma.user.findFirst(
-            { where: { id: user.id } },
+        const userDetails = await prisma.user.findFirst(
+            { where: { id: id } },
         );
-        done(null, userD);
+        done(null, userDetails);
     } catch(err) {
         done(err);
     }

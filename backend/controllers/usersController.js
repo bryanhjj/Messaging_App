@@ -37,9 +37,10 @@ const usersCreatePost =
 const usersUpdatePut = async (req, res) => {
     const { userId } = req.params;
     const { email } = req.body;
+    // need to implement a check to see if cur user is the same as the one to be updated
     const result = await prisma.user.update({
         where: {
-            id: userId,
+            id: Number(userId),
         },
         data: {
             email: email,
@@ -50,7 +51,7 @@ const usersUpdatePut = async (req, res) => {
 
 const usersSearchNameGet = async (req, res) => {
     const { username } = req.body; // searches based on username
-    const result = await prisma.user.findUnique({
+    const result = await prisma.user.findMany({
         where: {username : username},
     });
     res.json(result);
@@ -59,7 +60,7 @@ const usersSearchNameGet = async (req, res) => {
 const usersSearchIdGet = async (req, res) => {
     const { id } = req.body; // searches based on id
     const result = await prisma.user.findUnique({
-        where: {id : id},
+        where: {id : Number(id)},
     });
     res.json(result);
 };
@@ -67,13 +68,20 @@ const usersSearchIdGet = async (req, res) => {
 const usersDelete = async (req, res) => {
     const { userId } = req.params;
     // ensures that the current logged in user is that same as the about-to-be-deleted user before proceeding
-    if (req.user.id === userId) {
-        const result = await prisma.user.delete({
+    // need to include deleting messages and chatroom later
+    if (req.user.id === Number(userId)) {
+        const deleteProfile = prisma.profile.delete({
             where: {
-                id: userId,
-            }
+                userId: Number(userId),
+            },
         });
-        res.json(result);
+        const deleteUser = prisma.user.delete({
+            where: {
+                id: Number(userId),
+            },
+        });
+        const transaction = await prisma.$transaction([deleteProfile, deleteUser]);
+        res.json(transaction);
     } else {
         res.statusMessage = "You are not authorized to perform this action.";
         res.status(401).end();
