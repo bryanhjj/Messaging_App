@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { messageAllGet, messageSendPost, messageEditPut, messageDelete} from '../controllers/messageController.js';
+import { chatroomMessageGet, messageSendPost, messageEditPut, messageDelete } from '../controllers/messageController.js';
 import isAuth from "./isAuthMiddleware.js";
 
 const messageRouter = Router();
 
-messageRouter.get( // gets every message
+messageRouter.get( // gets every message in a specified chatroom
     "/:chatroomId",
     isAuth,
-    messageAllGet, 
+    chatroomMessageGet, 
 );
 messageRouter.post( // user sends a message to a chatroom
     "/:chatroomId", 
