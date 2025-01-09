@@ -37,16 +37,21 @@ const usersCreatePost =
 const usersUpdatePut = async (req, res) => {
     const { userId } = req.params;
     const { email } = req.body;
-    // need to implement a check to see if cur user is the same as the one to be updated
-    const result = await prisma.user.update({
-        where: {
-            id: Number(userId),
-        },
-        data: {
-            email: email,
-        }
-    });
-    res.json(result);
+    // ensures that only users can update their own details
+    if (req.user.id === Number(userId)) {
+        const result = await prisma.user.update({
+            where: {
+                id: Number(userId),
+            },
+            data: {
+                email: email,
+            }
+        });
+        res.json(result);
+    } else {
+        res.statusMessage = "You are not authorized to perform this action.";
+        res.status(401).end();
+    };
 };
 
 const usersSearchNameGet = async (req, res) => {
