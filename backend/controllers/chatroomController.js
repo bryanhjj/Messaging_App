@@ -9,22 +9,22 @@ export const allChatroomGet = async (req, res) => {
 
 export const userChatroomGet = async (req, res) => {
     const result = await prisma.chatroom.findMany({
-        where: { users: {
-                    some: { 
-                        id: req.user.id,
-                    },
+        where: { 
+            users: {
+                some: { 
+                    id: Number(req.user.id),
                 },
+            },
+        },
+        select: {
+            id: true,
+            users: {
                 select: {
                     id: true,
-                    users: {
-                        where: {
-                            id: req.user.id,
-                        },
-                        select: {
-                            id: true,
-                        },
-                    },
                 },
+            },
+            messages: true,
+            createdAt: true,
         },
     });
     res.json(result);
@@ -33,7 +33,7 @@ export const userChatroomGet = async (req, res) => {
 export const chatroomCreatePost = async (req, res) => {
     const result = await prisma.chatroom.create({
         data: {
-            users: { connect: { id: req.user.id }},
+            users: { connect: { id: Number(req.user.id) }},
         },
     });
     res.json(result);
@@ -41,11 +41,11 @@ export const chatroomCreatePost = async (req, res) => {
 
 export const addChatroomUserPut = async (req, res) => {
     const { chatroomId } = req.params;
-    const { newUser } = req.body; // to further look into this
+    const { newUserId } = req.body;
     const result = await prisma.chatroom.update({
-        where: { id: chatroomId },
+        where: { id: Number(chatroomId) },
         data: {
-            users: { connect: { id: newUser.id } },
+            users: { connect: { id: Number(newUserId) } },
         },
     });
     res.json(result);
@@ -54,9 +54,9 @@ export const addChatroomUserPut = async (req, res) => {
 export const removeChatroomUserPut = async (req, res) => {
     const { chatroomId } = req.params;
     const result = await prisma.chatroom.update({
-        where: { id: chatroomId },
+        where: { id: Number(chatroomId) },
         data: {
-            users: { disconnect: { id: req.user.id } }
+            users: { disconnect: { id: Number(req.user.id) } }
         },
     });
     res.json(result);
@@ -65,7 +65,7 @@ export const removeChatroomUserPut = async (req, res) => {
 export const chatroomDelete = async (req, res) => {
     const { chatroomId } = req.params;
     const result = await prisma.chatroom.delete({
-        where: { id: chatroomId },
+        where: { id: Number(chatroomId) },
     });
     res.json(result);
 };
