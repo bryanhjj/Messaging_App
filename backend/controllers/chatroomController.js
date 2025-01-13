@@ -64,8 +64,16 @@ export const removeChatroomUserPut = async (req, res) => {
 
 export const chatroomDelete = async (req, res) => {
     const { chatroomId } = req.params;
-    const result = await prisma.chatroom.delete({
-        where: { id: Number(chatroomId) },
+    const deleteAttachedMsg = prisma.message.deleteMany({
+        where: {
+            chatroomId: Number(chatroomId),
+        },
     });
-    res.json(result);
+    const deleteChatroom = prisma.chatroom.delete({
+        where: { 
+            id: Number(chatroomId),
+        },
+    });
+    const transaction = await prisma.$transaction([deleteAttachedMsg, deleteChatroom]);
+    res.json(transaction);
 };

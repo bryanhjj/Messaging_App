@@ -73,11 +73,15 @@ const usersSearchIdGet = async (req, res) => {
 const usersDelete = async (req, res) => {
     const { userId } = req.params;
     // ensures that the current logged in user is that same as the about-to-be-deleted user before proceeding
-    // need to include deleting messages and chatroom later
     if (req.user.id === Number(userId)) {
         const deleteProfile = prisma.profile.delete({
             where: {
                 userId: Number(userId),
+            },
+        });
+        const deleteUserMsg = prisma.message.deleteMany({
+            where: {
+                authorId: Number(userId),
             },
         });
         const deleteUser = prisma.user.delete({
@@ -85,7 +89,7 @@ const usersDelete = async (req, res) => {
                 id: Number(userId),
             },
         });
-        const transaction = await prisma.$transaction([deleteProfile, deleteUser]);
+        const transaction = await prisma.$transaction([deleteProfile, deleteUserMsg, deleteUser]);
         res.json(transaction);
     } else {
         res.statusMessage = "You are not authorized to perform this action.";
