@@ -20,7 +20,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // ie. 1 day
-    secure: true,
+    secure: true, // comment this part out for postman testing purposes
   },
 }));
 app.use(express.urlencoded({ extended: false }));
@@ -37,7 +37,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express app listening on port ${PORT}!`));
 
 /*
-------------------     TO DO LIST      ------------------
-3)    (Optional, extra credit) implement a friendlist system
-6)    test shit
+------------------     NOTES      ------------------
+3)    (Optional, extra credit) implement a friendlist system                      
 */
