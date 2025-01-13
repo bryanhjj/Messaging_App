@@ -41,18 +41,33 @@ export const messageSendPost = async (req, res) => {
 export const messageEditPut = async (req, res) => {
     const { messageId } = req.params;
     const { content } = req.body;
-    const result = await prisma.message.update({
+    const originalMessage = await prisma.message.findUnique({
         where: { id: Number(messageId) },
-        data: { content: content },
     });
-    res.json(result);
+    if (originalMessage.authorId === Number(req.user.id)) {
+        const result = await prisma.message.update({
+            where: { id: Number(messageId) },
+            data: { content: content },
+        });
+        res.json(result);
+    } else {
+        res.statusMessage = "You are not authorized to perform this action.";
+        res.status(401).end();
+    }
 };
 
-// to implement a check to ensure that users can only delete their own messages
 export const messageDelete = async (req, res) => {
     const { messageId } = req.params;
-    const result = await prisma.message.delete({
+    const originalMessage = await prisma.message.findUnique({
         where: { id: Number(messageId) },
     });
-    res.json(result);
+    if (originalMessage.authorId === Number(req.user.id)) {
+        const result = await prisma.message.delete({
+            where: { id: Number(messageId) },
+        });
+        res.json(result);
+    } else {
+        res.statusMessage = "You are not authorized to perform this action.";
+        res.status(401).end();
+    }
 };
