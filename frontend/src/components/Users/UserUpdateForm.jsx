@@ -3,7 +3,7 @@ import UserContext from "./UserContext";
 
 // get mui stuff in here
 
-export function UserUpdateForm () {
+export default function UserUpdateForm () {
     const [user] = useContext(UserContext);
     const updateForm = useRef(null);
 

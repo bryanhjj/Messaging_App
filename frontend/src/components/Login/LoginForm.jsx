@@ -1,9 +1,9 @@
 import { useRef, useContext } from "react";
-import UserContext from "./UserContext";
+import UserContext from "../Users/UserContext";
 
 // some mui icon
 
-export function LoginForm () {
+export default function LoginForm () {
     const loginForm = useRef(null);
     const [user, setUser] = useContext(UserContext);
 
@@ -14,7 +14,7 @@ export function LoginForm () {
             const result = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "x-www-form-urlencoded",
                 },
                 body: JSON.stringify(formData),
             });

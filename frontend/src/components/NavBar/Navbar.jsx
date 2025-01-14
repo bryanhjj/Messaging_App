@@ -4,7 +4,7 @@ import styles from "./Navbar.module.css";
 
 // get some mui icons
 
-export function Navbar () {
+export default function Navbar () {
     const [isExpanded, setIsExpanded] = useState(false);
     const expandMenu = () => setIsExpanded(true);
     const collapseMenu = () => setIsExpanded(false);

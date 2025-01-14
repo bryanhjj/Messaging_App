@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Chatroom } from '../Chatroom/Chatroom';
+import Chatroom from '../Chatroom/Chatroom';
 
 // mui stuff
 
-export function Dashboard () {
+export default function Dashboard () {
     const [chatrooms, setChatrooms] = useState([]);
 
     useEffect(() => {

@@ -3,7 +3,7 @@ import { ChatInput } from "./ChatInput";
 
 // get some mui stuff
 
-export function Chatroom () {
+export default function Chatroom () {
     let chatroomId = useParams();
     const navigate = useNavigate();
     const [chatlog, setChatlog] = useState([]);

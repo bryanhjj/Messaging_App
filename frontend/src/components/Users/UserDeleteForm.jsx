@@ -3,7 +3,7 @@ import UserContext from "./UserContext";
 
 // get mui stuff in here
 
-export function UserDeleteForm () {
+export default function UserDeleteForm () {
     const navigate = useNavigate();
     const [user] = useContext(UserContext);
 

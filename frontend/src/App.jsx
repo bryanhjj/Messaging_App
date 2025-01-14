@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { UserProvider } from "./components/Users/UserContext";
+import UserProvider from "./components/Users/UserContext";
+import Router from "./routes/router";
 
 function App() {
   return (
     <>
       <UserProvider>
+        <Router />
       </UserProvider>
     </>
   )

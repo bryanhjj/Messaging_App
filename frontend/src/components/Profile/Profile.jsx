@@ -1,11 +1,11 @@
 import { useRef, useContext, useEffect, useState, useParams } from "react";
-import UserContext from "./UserContext";
+import UserContext from "../Users/UserContext";
 
 // insert mui stuff here
 
 // maybe friend system here too
 
-export function Profile () {
+export default function Profile () {
     let {profileUserID} = useParams();
     const [user] = useContext(UserContext);
     const [targetUser, setTargetUser] = useState(null);

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 
 // some mui icon
 
-export function SignUpForm () {
+export default function SignUpForm () {
     const signUpForm = useRef(null);
 
     async function handleOnSignUp (e) {
