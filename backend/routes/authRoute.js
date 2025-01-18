@@ -1,9 +1,10 @@
 import { Router } from "express";
-import passport from "../config/passport.js";
+import { usersLogin } from "../controllers/usersController.js";
+
 const authRouter = Router();
 
 // user login
-authRouter.post("/login", passport.authenticate("local", {failureRedirect: "/login", successRedirect: "/"}));
+authRouter.post("/login", usersLogin);
 
 // user logout
 authRouter.post("/logout", (req, res, next) => {
@@ -13,11 +14,6 @@ authRouter.post("/logout", (req, res, next) => {
     }
     res.redirect("/auth/login");
   });
-});
-
-// passes logged-in user details for react use
-authRouter.get("/user", (req, res) => {
-  res.status(200).json({ user: req.user });
 });
 
 export default authRouter;

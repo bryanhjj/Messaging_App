@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import { getLoggedUserInfo } from './usersController.js';
 
 const prisma = new PrismaClient();
 
@@ -8,11 +9,12 @@ export const allChatroomGet = async (req, res) => {
 };
 
 export const userChatroomGet = async (req, res) => {
+    const curUserInfo = getLoggedUserInfo(req, res);
     const result = await prisma.chatroom.findMany({
         where: { 
             users: {
                 some: { 
-                    id: Number(req.user.id),
+                    id: Number(curUserInfo.user.id),
                 },
             },
         },
@@ -31,9 +33,10 @@ export const userChatroomGet = async (req, res) => {
 };
 
 export const chatroomCreatePost = async (req, res) => {
+    const curUserInfo = getLoggedUserInfo(req, res);
     const result = await prisma.chatroom.create({
         data: {
-            users: { connect: { id: Number(req.user.id) }},
+            users: { connect: { id: Number(curUserInfo.user.id) }},
         },
     });
     res.json(result);
@@ -52,11 +55,12 @@ export const addChatroomUserPut = async (req, res) => {
 };
 
 export const removeChatroomUserPut = async (req, res) => {
+    const curUserInfo = getLoggedUserInfo(req, res);
     const { chatroomId } = req.params;
     const result = await prisma.chatroom.update({
         where: { id: Number(chatroomId) },
         data: {
-            users: { disconnect: { id: Number(req.user.id) } }
+            users: { disconnect: { id: Number(curUserInfo.user.id) } }
         },
     });
     res.json(result);

@@ -5,24 +5,24 @@ import {
     usersSearchIdGet, 
     usersCreatePost, 
     usersUpdatePut, 
-    usersDelete
+    usersDelete,
+    verifyUserToken
 } from '../controllers/usersController.js';
-import isAuth from "./isAuthMiddleware.js";
 const usersRouter = express.Router();
 
 usersRouter.get( // get all users
     "/", 
-    isAuth,
+    verifyUserToken,
     usersAllGet,
 );
 usersRouter.get( // search for specific user via username
     "/searchName",
-    isAuth,
+    verifyUserToken,
     usersSearchNameGet,
 );
 usersRouter.get( // search for specific user via id
     "/searchId",
-    isAuth,
+    verifyUserToken,
     usersSearchIdGet,
 );
 usersRouter.post( // new user sign-up
@@ -31,12 +31,12 @@ usersRouter.post( // new user sign-up
 )
 usersRouter.put( // update user details
     "/:userId",
-    isAuth,
+    verifyUserToken,
     usersUpdatePut,
 );
 usersRouter.delete( // delete a user account
     "/:userId",
-    isAuth,
+    verifyUserToken,
     usersDelete,
 );
 

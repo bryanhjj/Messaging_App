@@ -1,5 +1,5 @@
 import { Router } from "express";
-import isAuth from "./isAuthMiddleware.js";
+import { verifyUserToken } from '../controllers/usersController.js';
 import {
     allChatroomGet,
     userChatroomGet,
@@ -13,32 +13,32 @@ const chatroomRouter = Router();
 
 chatroomRouter.get( // get every single chatroom
     "/",
-    isAuth,
+    verifyUserToken,
     allChatroomGet,
 );
 chatroomRouter.get( // get current logged in user's chatrooms
     "/dashboard",
-    isAuth,
+    verifyUserToken,
     userChatroomGet,
 );
 chatroomRouter.post( // make a new chatroom
     "/dashboard",
-    isAuth,
+    verifyUserToken,
     chatroomCreatePost,
 );
 chatroomRouter.put( // adds a new user to an existing chatroom
     "/join/:chatroomId",
-    isAuth,
+    verifyUserToken,
     addChatroomUserPut,
 );
 chatroomRouter.put( // user leaves a chatroom
     "/leave/:chatroomId",
-    isAuth,
+    verifyUserToken,
     removeChatroomUserPut,
 );
 chatroomRouter.delete( // deletes a chatroom
     "/:chatroomId",
-    isAuth,
+    verifyUserToken,
     chatroomDelete,
 );
 

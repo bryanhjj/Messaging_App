@@ -1,17 +1,17 @@
 import express from "express";
 import { allProfileGet, specificProfileGet, editProfilePut} from "../controllers/profileController.js";
-import isAuth from "./isAuthMiddleware.js";
+import { verifyUserToken } from '../controllers/usersController.js';
 
 const profileRouter = express.Router();
 
 profileRouter.get( // get all profiles
     "/",
-    isAuth,
+    verifyUserToken,
     allProfileGet,
 );
 profileRouter.get( // get specific profile
     "/:profileId",
-    isAuth,
+    verifyUserToken,
     specificProfileGet,
 );
 

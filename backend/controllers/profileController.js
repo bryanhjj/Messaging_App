@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import { getLoggedUserInfo } from './usersController.js';
 
 const prisma = new PrismaClient();
 
