@@ -2,6 +2,7 @@
 import express from "express";
 import 'dotenv/config'
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "./config/passport.js";
 import usersRouter from "./routes/usersRoute.js";
@@ -13,7 +14,10 @@ import chatroomRouter from "./routes/chatroomRoute.js";
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cookieParser());
+app.use(express.json());
+// app.use(cors());
+app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
 app.use(session({ 
   secret: process.env.SESSION_SECRET, 
   resave: false, 
