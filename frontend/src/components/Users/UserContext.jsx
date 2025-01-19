@@ -18,7 +18,7 @@ export const UserProvider = ({children}) => {
                 setIsAuth(false);
                 setUser(null);
                 localStorage.removeItem('token');
-                localStorage.removeItem('tokenExpirationTime');
+                localStorage.removeItem('expirationTime');
             } else {
                 try {
                     const userInfo = jwtDecode(token);
