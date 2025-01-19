@@ -1,50 +1,65 @@
-import { useRef, useContext } from "react";
-import UserContext from "../Users/UserContext";
+import { useContext, useState } from "react";
+import { useNavigate, Link } from 'react-router-dom';
+import { UserContext } from "../Users/UserContext";
 
 // some mui icon
 
 export default function LoginForm () {
-    const loginForm = useRef(null);
-    const [user, setUser] = useContext(UserContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    // const {user, setUser, isAuth, setIsAuth} = useContext(UserContext);
+    const navigate = useNavigate();
 
     async function handleOnLogin (e) {
         e.preventDefault();
+        const authTimer = 1000 * 60 * 60 * 10;
+        const expTime = Date.now() + authTimer;
         try {
-            const formData = new FormData(loginForm.current);
-            const result = await fetch(`${API_URL}/auth/login`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "x-www-form-urlencoded",
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                credentials: 'include',
+                body: JSON.stringify({ email, password }),
             });
-            setUser(result); // look into what's returned to us from the API and work from there
-            if (!result.ok) {
-                throw new Error('Login failed');
-            };
+            if (response.ok) {
+                const result = await response.json();
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("expirationTime", expTime);
+                navigate("/");
+            }
         } catch(err) {
             console.log(err);
         }
     };
 
     return (
-        <form id="login-form" ref={loginForm} onSubmit={handleOnLogin}>
+        <form id="login-form" onSubmit={handleOnLogin}>
             <label>
                 <span>Email: </span>
                 <input
-                        placeholder="Insert your email here."
-                        aria-label="Email"
+                        placeholder="Email"
                         type="email"
                         name="email"
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}
+                        required
                 />
             </label>
             <label>
                 <span>Password: </span>
                 <input
-                        placeholder="Insert your password here."
-                        aria-label="Password"
+                        placeholder="Password"
                         type="password"
                         name="password"
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                        }}
+                        required
                 />
             </label>
             <div>
