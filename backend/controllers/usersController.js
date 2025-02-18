@@ -125,7 +125,7 @@ const usersLogin = async (req, res, next) => {
 
 const verifyUserToken = (req, res, next) => {
     const bearerHeader = req.headers.authorization;
-    if (bearerHeader) {
+    if (typeof bearerHeader !== 'undefined') {
         const bearerToken = bearerHeader.split(" ")[1];
         req.token = bearerToken;
         jwt.verify(req.token, process.env.SESSION_SECRET, (err) => {
