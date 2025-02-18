@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import './Dashboard.css';
-import Chatroom from '../Chatroom/Chatroom';
 
 // mui stuff
 
