@@ -1,35 +1,46 @@
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import './Dashboard.css';
 import Chatroom from '../Chatroom/Chatroom';
 
 // mui stuff
 
 export default function Dashboard () {
-    const [chatrooms, setChatrooms] = useState([]);
+    const [chatroom, setChatroom] = useState([]);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
-        fetchUserChatrooms();
-    }, []);
-
-    const fetchUserChatrooms = async () => {
-        try {
-            const result = await fetch(`${API_URL}/chatroom/dashboard`, 
+        const fetchChatroom = async () => {
+            await fetch(`${process.env.REACT_APP_API_URL}/chatroom/dashboard`, 
                 {
                 method: "GET",
-                }
-            );
-            setChatrooms(...result);
-        } catch(err) {
-            console.log(err);
-        }
-    };
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                    },
+                },
+            )
+            .then((res) => res.json())
+            .then((data) => setChatroom(data));
+        };
+        fetchChatroom();
+    }, []);
 
     return(
         <div>
-            {chatrooms.map((c) => {
-                return (
-                    <Chatroom chatroomId = {c.id} />
-                );
-            })}
+            {chatroom.length >= 1 ? (
+                <div>
+                    {chatroom.map((c) => {
+                        return (
+                            <li key={c.id}>
+                                <Link to={`chatroom/${c.id}`}>{c.createdAt}</Link>
+                            </li>
+                        );
+                    })}
+                </div>
+            ) : 
+            <div>You are not in any chatrooms.</div>
+            }
         </div>
     );
 };
