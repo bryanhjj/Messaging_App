@@ -1,27 +1,29 @@
 import { useState, useContext } from "react";
-import UserContext from '../Users/UserContext';
+import { UserContext } from "../Users/UserContext";
+import { useParams, useNavigate } from "react-router-dom";
 
 // maybe some mui stuff
 
-export function ChatInput (chatroomId) {
-    const [newMessage, setNewMessage] = useState([]);
+export function ChatInput ({setChatlog}) {
+    const { chatroomId } = useParams();
+    const [newMessage, setNewMessage] = useState('');
     const [user] = useContext(UserContext);
+    const token = localStorage.getItem("token");
 
-    async function handleSendMessage() {
+    async function handleSendMessage(event) {
+        event.preventDefault();
         try {
-            const result = await fetch(`${API_URL}/message/${chatroomId}`,
+            await fetch(`${process.env.REACT_APP_API_URL}/message/${chatroomId}`,
                 {
                     method: "POST",
-                    body: {
-                        content: newMessage,
-                        authorId: user.id,
-                        chatroomId: chatroomId,
+                    body: JSON.stringify({content: newMessage}),
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
                     },
                 }
-            );
-            if (!result.ok) {
-                throw new Error('Unable to send message.');
-            };
+            ).then((res) => res.json())
+            .then((data) => setChatlog((prevChatlog) => [...prevChatlog, data]));
         } catch (err) {
             console.log(err.message); // update and use a better error handler
         }
@@ -33,7 +35,9 @@ export function ChatInput (chatroomId) {
                 <input
                     type="text"
                     value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    onChange={(e) => {
+                        setNewMessage(e.target.value);
+                    }}
                 />
                 <button type="submit">Send</button>
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useNavigate } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ChatInput } from "./ChatInput";
 
@@ -37,9 +37,7 @@ export default function Chatroom () {
                     )  
                 })}
             </div>
-            <ChatInput
-                chatroomId={chatroomId}
-            />
+            <ChatInput setChatlog={setChatlog}/>
         </div>
     );
 };
