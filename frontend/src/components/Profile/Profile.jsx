@@ -1,43 +1,47 @@
-import { useRef, useContext, useEffect, useState, useParams } from "react";
-import UserContext from "../Users/UserContext";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../Users/UserContext";
 
 // insert mui stuff here
 
-// maybe friend system here too
-
 export default function Profile () {
-    let {profileUserID} = useParams();
+    let { profileId } = useParams();
     const [user] = useContext(UserContext);
-    const [targetUser, setTargetUser] = useState(null);
+    const [targetUser, setTargetUser] = useState();
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
-        getTargetUserInfo(profileUserID);
-    }, []);
-
-    const getTargetUserInfo = async (profileUserID) => {
-        try {
-            const result = await fetch(`${API_URL}/users/searchId`, {
-              headers: "GET",
-              body: {
-                id: profileUserID,
-              }
-            });
-            setTargetUser(result);
-        } catch(err) {
-            console.log(err);
+        const getTargetUserInfo = async () => {
+            await fetch(`${process.env.REACT_APP_API_URL}/profile/${profileId}`, 
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((res) => res.json())
+            .then((data) => setTargetUser(data));
         };
-    };
+        getTargetUserInfo();
+    }, []);
 
     const handleStartChat = async (targetUser) => {
         try {
             const newRoom = await fetch(`${API_URL}/chatroom/dashboard`, {
-                headers: "POST",
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
             const newRoomWithUsers = await fetch(`${API_URL}/chatroom/join/${newRoom.id}`, {
-                headers: "PUT",
+                method: "PUT",
                 body: {
-                    newUser: targetUser,
-                }
+                    newUserId: Number(targetUser.id),
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             });
         } catch(err) {
             console.log(err);
@@ -46,19 +50,27 @@ export default function Profile () {
 
     return (
         <div>
-            <div>
-                <h1>{targetUser.username}</h1>
-            </div>
-            <div>
-                <h2>Bio: </h2>
-                <p>{targetUser.bio}</p>
-            </div>
-            { user.id === targetUser.id ? 
-                <></>
+            { targetUser ? 
+                <div>
+                    <div>
+                        <h1>{targetUser.username}</h1>
+                    </div>
+                    <div>
+                        <h2>Bio: </h2>
+                        <p>{targetUser.bio}</p>
+                    </div>
+                    { user.id === targetUser.id ? 
+                        <></>
+                        :
+                        <div>
+                            <button onClick={handleStartChat(targetUser)}>Send message</button>
+                        </div>
+                    }
+                </div>
             : 
-                <form onSubmit={handleStartChat(targetUser)}>
-                    <button type="submit">Send Message</button>
-                </form>
+                <div>
+                    <h1>There's nothing here...</h1>
+                </div>
             }
         </div>
     );

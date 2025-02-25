@@ -10,7 +10,7 @@ export const allProfileGet = async (req, res) => {
 export const specificProfileGet = async (req, res) => {
     const { profileId } = req.params;
     const result = await prisma.profile.findFirst({
-        where: { id: profileId },
+        where: { id: Number(profileId) },
     });
     res.json(result);
 };
@@ -19,7 +19,7 @@ export const editProfilePut = async (req, res) => {
     const { profileId } = req.params;
     const { bio } = req.body;
     const result = await prisma.profile.update({
-        where: { id: profileId },
+        where: { id: Number(profileId) },
         data: { bio: bio },
     });
     res.json(result);
