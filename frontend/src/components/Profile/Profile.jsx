@@ -49,7 +49,7 @@ export default function Profile () {
             })
             .then((res) => res.json())
             .catch((err) => console.log(err));
-        if (!result,ok) {
+        if (!result.ok) {
             throw new Error("An error has occured.");
         } else {
             alert("Chatroom created.");
