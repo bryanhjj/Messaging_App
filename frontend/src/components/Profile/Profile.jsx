@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Users/UserContext";
 
 // insert mui stuff here
@@ -9,6 +9,7 @@ export default function Profile () {
     const [user] = useContext(UserContext);
     const [targetUser, setTargetUser] = useState();
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getTargetUserInfo = async () => {
@@ -26,25 +27,33 @@ export default function Profile () {
         getTargetUserInfo();
     }, []);
 
-    const handleStartChat = async (targetUser) => {
-        try {
-            const newRoom = await fetch(`${API_URL}/chatroom/dashboard`, {
+    const handleStartChat = async () => {
+        const result = await fetch(`${process.env.REACT_APP_API_URL}/chatroom/dashboard`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            });
-            const newRoomWithUsers = await fetch(`${API_URL}/chatroom/join/${newRoom.id}`, {
-                method: "PUT",
-                body: {
-                    newUserId: Number(targetUser.id),
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-        } catch(err) {
-            console.log(err);
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                return fetch(`${process.env.REACT_APP_API_URL}/chatroom/join/${data.id}`, {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        newUserId: Number(targetUser.id),
+                    }),
+                })
+            })
+            .then((res) => res.json())
+            .catch((err) => console.log(err));
+        if (!result,ok) {
+            throw new Error("An error has occured.");
+        } else {
+            alert("Chatroom created.");
+            navigate("/");
         }
     };
 
@@ -63,7 +72,7 @@ export default function Profile () {
                         <></>
                         :
                         <div>
-                            <button onClick={handleStartChat(targetUser)}>Send message</button>
+                            <button onClick={handleStartChat}>Send message</button>
                         </div>
                     }
                 </div>
