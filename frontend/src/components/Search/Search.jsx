@@ -1,65 +1,46 @@
-import { useState, Form, useNavigate } from "react";
+import { useState, Form } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // mui stuff here
 
-export function Search () {
-  const [searchQuery, setSearchQuery] = useState();
-    const [searchResult, setSearchResult] = useState([]);
-    const [searching, setSearching] = useState(false);
+export const SearchBar = () => {
+    const [input, setInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]); 
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
 
-    const handleUserSearch = async (username) => {
-        try {
-          setSearching(!searching);
-          const result = await fetch(`${API_URL}/users/search`, {
-              headers: "GET",
-              body: {
-                username: username,
-              }
-          });
-          setSearchResult(...result);
-          setSearching(!searching);
-      } catch(err) {
-        console.log(err); // to implement
-      };
+    const handleFetchData = async (value) => {
+        await fetch(`${process.env.REACT_APP_API_URL}/users/searchName?username=${value}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => setSearchResults(data));
     };
+
+    const handleChange = (value) => {
+        setInput(value);
+        handleFetchData(value);
+    }
 
     return (
         <div>
-            <Form id="search-form" role="search" onSubmit={handleUserSearch(searchQuery)}> 
-              <input
-                id="q"
-                className={searching ? "loading" : ""}
-                aria-label="Search contacts"
-                placeholder="Search"
-                type="search"
-                defaultValue="Enter username here"
-                onChange={(e) => {setSearchQuery(e.target.value)}}
-              />
-              <button type="submit">Search</button>
-              <div
-                id="search-spinner"
-                aria-hidden
-                hidden={!searching}
-              />
-              <div
-                className="sr-only"
-                aria-live="polite"
-              ></div>
-            </Form>
-            {searchResult ? (
-              <div>
-                {searchResult.map((result) => {
-                  <div onClick={() => {navigate(`${URL}/users/${result.id}`)}}>
-                    {item.username}
-                  </div>
-                })}
-              </div>
-            ) : (
-              <div>
-                <h2>We couldn't find anything that matches your queries.</h2>
-              </div>
-            )}
+            <input 
+                placeholder="Search user"
+                value={input}
+                onChange={(e) => handleChange(e.target.value)}
+            />
+            {searchResults.map((item) => {
+                return (
+                    <Link key={item.id} to={`profile/${item.id}`}>
+                        {item.username}
+                    </Link>
+                )
+            })}
         </div>
     )
 };

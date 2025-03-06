@@ -56,7 +56,7 @@ const usersUpdatePut = async (req, res) => {
 };
 
 const usersSearchNameGet = async (req, res) => {
-    const { username } = req.body; // searches based on username
+    const { username } = req.query; // searches based on username
     const result = await prisma.user.findMany({
         where: {username : username},
     });
@@ -64,7 +64,7 @@ const usersSearchNameGet = async (req, res) => {
 };
 
 const usersSearchIdGet = async (req, res) => {
-    const { id } = req.body; // searches based on id
+    const { id } = req.query; // searches based on id
     const result = await prisma.user.findUnique({
         where: {id : Number(id)},
     });
