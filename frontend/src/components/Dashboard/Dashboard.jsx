@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import { SearchBar } from '../Search/Search';
 import './Dashboard.css';
 
 // mui stuff
@@ -27,6 +28,7 @@ export default function Dashboard () {
 
     return(
         <div>
+            <SearchBar />
             {chatroom.length >= 1 ? (
                 <div>
                     {chatroom.map((c) => {
