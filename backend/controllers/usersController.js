@@ -152,6 +152,10 @@ const getLoggedUserInfo = (req, res) => {
     };
 };
 
+const usersLogout = (req, res) => {
+    res.cookie("token", "").json({ message: 'Logout successful.'});
+};
+
 export {
     usersAllGet, 
     usersSearchNameGet, 
@@ -160,6 +164,7 @@ export {
     usersUpdatePut, 
     usersDelete,
     usersLogin,
+    usersLogout,
     verifyUserToken,
     getLoggedUserInfo
 };
