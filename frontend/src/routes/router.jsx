@@ -6,6 +6,7 @@ import Chatroom from "../components/Chatroom/Chatroom";
 import Profile from "../components/Profile/Profile";
 import SignUpForm from "../components/SignUp/SignUpForm";
 import LoginForm from "../components/Login/LoginForm";
+import LogoutForm from "../components/Logout/LogoutForm";
 import UserUpdateForm from "../components/Users/UserUpdateForm";
 import UserDeleteForm from "../components/Users/UserDeleteForm";
 
@@ -46,6 +47,10 @@ const Router = () => {
               {
                 path: "login",
                 element: <LoginForm />,
+              },
+              {
+                path: "logout",
+                element: <LogoutForm />,
               },
             ], 
           },
