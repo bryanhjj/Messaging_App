@@ -1,13 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
-import { UserContext } from "../Users/UserContext";
+import "./LoginForm.css";
 
 // some mui icon
 
 export default function LoginForm () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const {user, setUser, isAuth, setIsAuth} = useContext(UserContext);
     const navigate = useNavigate();
 
     async function handleOnLogin (e) {
@@ -35,36 +34,33 @@ export default function LoginForm () {
     };
 
     return (
-        <form id="login-form" onSubmit={handleOnLogin}>
-            <label>
-                <span>Email: </span>
-                <input
-                        placeholder="Email"
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                        }}
-                        required
-                />
-            </label>
-            <label>
-                <span>Password: </span>
-                <input
-                        placeholder="Password"
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                        required
-                />
-            </label>
-            <div>
-                <button type="submit">Login</button>
-            </div>
-        </form>
+        <div className="main">
+            <form className="login-form" onSubmit={handleOnLogin}>
+                    <input
+                            placeholder="Email"
+                            type="email"
+                            name="email"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }}
+                            required
+                    />
+                    <input
+                            placeholder="Password"
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                            required
+                    />
+                <div>
+                    <button type="submit">Login</button>
+                    <Link to={"/signup"} className="sign-up-link">Don't have an account? Sign up for free!</Link>
+                </div>
+            </form>
+        </div>
     );
 };
