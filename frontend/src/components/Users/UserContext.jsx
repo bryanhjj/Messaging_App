@@ -20,16 +20,11 @@ export const UserProvider = ({children}) => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('expirationTime');
             } else {
-                try {
-                    const userInfo = jwtDecode(token);
-                    setUser(userInfo.user);
-                    setIsAuth(true);
-                } catch(err) {
-                    console.log(err);
-                }
+                const userInfo = jwtDecode(token);
+                setUser(userInfo.user);
             }
         }
-    }, []);
+    }, [isAuth]);
 
     return (
         <UserContext.Provider value={[user, setUser, isAuth, setIsAuth]}>

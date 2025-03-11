@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, Link } from 'react-router-dom';
+import { UserContext } from "../Users/UserContext";
+import { jwtDecode } from "jwt-decode";
 import "./LoginForm.css";
 
 // some mui icon
@@ -7,6 +9,7 @@ import "./LoginForm.css";
 export default function LoginForm () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [user, setUser, isAuth, setIsAuth] = useContext(UserContext);
     const navigate = useNavigate();
 
     async function handleOnLogin (e) {
@@ -24,6 +27,9 @@ export default function LoginForm () {
             });
             if (response.ok) {
                 const result = await response.json();
+                setIsAuth(true);
+                const userInfo = jwtDecode(result.token);
+                setUser(userInfo.user);
                 localStorage.setItem("token", result.token);
                 localStorage.setItem("expirationTime", expTime);
                 navigate("/");
