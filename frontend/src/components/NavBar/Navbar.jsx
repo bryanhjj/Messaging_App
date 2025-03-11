@@ -16,28 +16,68 @@ export default function Navbar () {
 
     return (
       <div className="root">
-        <nav className="sidebar">
-          <h1 className="title">
-            blahblah
-          </h1>
-          {/* Mobile only. This button will open the menu */}
-          <button
-            className="menuToggle"
-            aria-label="open-menu"
-            onClick={toggleExpand}
-          >
-            <MenuIcon />
-          </button>
-          <div
-            className={`${isExpanded ? "expanded" : "not-expanded"}`}
-          >
-            <button
-              className={`${isExpanded ? "close-menu" : "hidden-close-menu"}`}
-              onClick={toggleExpand}
-              aria-label="close-menu"
-            >
-              X
+        <nav className="navbar">
+
+          {/* navbar for mobile devices */}
+          <div className="mobilebar">
+
+            <button className="menuToggle" onClick={toggleExpand}>
+              <MenuIcon />
             </button>
+          
+            <div className={`${isExpanded ? "expanded" : "not-expanded"}`} >
+              <button className={`${isExpanded ? "close-menu" : "hidden-close-menu"}`} onClick={toggleExpand}>
+                X
+              </button>
+              {user ?
+              <ul className="link-container">
+                <li>
+                  <Link
+                    onClick={toggleExpand}
+                    className="link"
+                    to={`profile/${user.id}`}
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={toggleExpand}
+                    className="link"
+                    to="user/edit"
+                  >
+                    Edit user details
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={toggleExpand}
+                    className="link"
+                    to="user/delete"
+                  >
+                    Delete user account
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={toggleExpand}
+                    className="link"
+                    to="/logout"
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+              : 
+              <></>
+              }
+            </div>
+          </div>
+
+          <h1 className="title">blahblah</h1>
+
+          {/* desktop ver of navbar */}
+          <div className="desktopbar">
             {user ?
               <ul className="link-container">
                 <li>
@@ -53,9 +93,27 @@ export default function Navbar () {
                   <Link
                     onClick={toggleExpand}
                     className="link"
-                    to="/users"
+                    to="user/edit"
                   >
-                    User setting
+                    Edit user details
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={toggleExpand}
+                    className="link"
+                    to="user/delete"
+                  >
+                    Delete user account
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={toggleExpand}
+                    className="link"
+                    to="/logout"
+                  >
+                    Logout
                   </Link>
                 </li>
               </ul>
@@ -63,10 +121,13 @@ export default function Navbar () {
               <div></div>
             }
           </div>
+
         </nav>
+
         <div className="content">
           <Outlet />
         </div>
+        
       </div>
     );
 };

@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&display=swap');
+
+/* desktop ver */
+.root {
+  display: flex;
+  flex-direction: row;
+}
+
+.mobilebar {
+  display: none;
+}
+
+.menuToggle {
+  display: none;
+}
+
+.close-menu {
+  display: block;
+}
+
+.hidden-close-menu {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin-top: 2vh;
+}
+
+.navbar {
+  width: 25vw;
+  background-color: #fda102;
+  border-right: solid 1px #e3e3e3;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-left: 2vw;
+}
+
+.title {
+  font-family: "Atma", serif;
+  font-weight: 300;
+  font-style: normal;
+  color: white;
+}
+
+.link {
+  font-family: "Atma", serif;
+  font-weight: 300;
+  font-style: normal;
+  color: white;
+  text-decoration: none;
+  font-size: 1.125rem;
+  display: block;
+  transition: 0.3s;
+}
+
+.link:hover {
+    color: #6d44b8;
+  }
+
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5vh;
+}
+
+/* Mobile ver */
+@media only screen and (max-width: 600px) {
+  .menuToggle {
+    display: block;
+    position: fixed;
+    width: 3vw;
+    height: 3vh;
+    top: -2vh;
+    left: 5vw;
+  }
+
+  .title {
+    position: fixed;
+    font-size: 1.5rem;
+    left: 20vw;
+    top: -1vh;
+  }
+
+  .navbar {
+    display: inline;
+    position: fixed;
+    top: 0;
+    height: 8vh;
+    width: 100vh;
+  }
+
+  .expanded {
+    display: block;
+    height: 100vh;
+    width: 70vw;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #fda102;
+    overflow: hidden;
+    padding-top: 10vh;
+  }
+
+  .link {
+    font-size: 1.5rem;
+  }
+
+  .expanded .close-menu {
+    position: absolute;
+    width: 3vw;
+    height: 3vh;
+    top: 0;
+    left: 45vw;
+    font-size: 1.5rem;
+    margin-left: 10vw;
+  }
+  
+  .not-expanded {
+    display: none;
+  }
+
+  .mobilebar {
+    display: block;
+  }
+
+  .desktopbar {
+    display: none;
+  }
+
+  .content {
+    height: 100%;
+    padding-top: 10vh;
+  }
+}
