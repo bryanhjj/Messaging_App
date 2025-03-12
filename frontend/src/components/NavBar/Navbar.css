@@ -43,6 +43,7 @@ li {
 .title {
   font-family: "Atma", serif;
   font-weight: 300;
+  font-size: 1.25rem;
   font-style: normal;
   color: white;
 }
@@ -53,7 +54,7 @@ li {
   font-style: normal;
   color: white;
   text-decoration: none;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   display: block;
   transition: 0.3s;
 }
