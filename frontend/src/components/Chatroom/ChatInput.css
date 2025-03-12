@@ -1,0 +1,43 @@
+/* Desktop ver */
+.ci-wrapper {
+    width: 50vw;
+    padding: 0 15px;
+}
+
+.chat-input {
+    background-color: transparent;
+    border: solid;
+    border-color: #fda102;
+    height: 5vh;
+    font-size: 1.25rem;
+    width: 70%;
+    margin-left: 5px;
+}
+
+.chat-input:focus {
+    outline: none;
+}
+
+.send-btn {
+    color: white;
+    background-color: #fda102;
+    border-color: #fda102;
+    height: 6vh;
+    position: relative;
+    top: 0.5vh;
+}
+
+/* Mobile ver */
+@media only screen and (max-width: 600px) {
+    .ci-wrapper{
+        width: 70vw;
+    }
+
+    .chat-input {
+        height: 4vh;
+    }
+
+    .send-btn {
+        height: 5vh;
+    }
+}

@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../Users/UserContext";
 import { useParams, useNavigate } from "react-router-dom";
+import "./ChatInput.css";
 
 // maybe some mui stuff
+import SendIcon from '@mui/icons-material/Send';
 
 export function ChatInput ({setChatlog}) {
     const { chatroomId } = useParams();
@@ -30,16 +32,20 @@ export function ChatInput ({setChatlog}) {
     }
 
     return (
-        <form method="post" id="chat-input-form" onSubmit={handleSendMessage}>
-            <div id="input-container">
+        <form method="post" className="ci-container" onSubmit={handleSendMessage}>
+            <div className="ci-wrapper">
                 <input
                     type="text"
+                    className="chat-input"
+                    placeholder="Send message"
                     value={newMessage}
                     onChange={(e) => {
                         setNewMessage(e.target.value);
                     }}
                 />
-                <button type="submit">Send</button>
+                <button type="submit" className="send-btn">
+                    <SendIcon/>
+                </button>
             </div>
         </form>
     );
