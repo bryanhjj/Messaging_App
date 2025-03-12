@@ -23,6 +23,7 @@ export const userChatroomGet = async (req, res) => {
             users: {
                 select: {
                     id: true,
+                    username: true,
                 },
             },
             messages: true,
