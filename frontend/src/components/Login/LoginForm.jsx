@@ -43,6 +43,7 @@ export default function LoginForm () {
         <div className="main">
             <form className="login-form" onSubmit={handleOnLogin}>
                     <input
+                            className="user-input"
                             placeholder="Email"
                             type="email"
                             name="email"
@@ -53,6 +54,7 @@ export default function LoginForm () {
                             required
                     />
                     <input
+                            className="user-input"
                             placeholder="Password"
                             type="password"
                             name="password"
@@ -63,7 +65,7 @@ export default function LoginForm () {
                             required
                     />
                 <div>
-                    <button type="submit">Login</button>
+                    <button type="submit" className="login-btn">Login</button>
                     <Link to={"/signup"} className="sign-up-link">Don't have an account? Sign up for free!</Link>
                 </div>
             </form>
