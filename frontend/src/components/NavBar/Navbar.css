@@ -73,10 +73,13 @@ li {
   .menuToggle {
     display: block;
     position: fixed;
-    width: 3vw;
-    height: 3vh;
-    top: -2vh;
+    width: 5vw;
+    height: 5vh;
     left: 5vw;
+    top: 2vh;
+    color: white;
+    background-color: #fda102;
+    border: none;
   }
 
   .title {
@@ -113,12 +116,15 @@ li {
 
   .expanded .close-menu {
     position: absolute;
-    width: 3vw;
-    height: 3vh;
-    top: 0;
+    width: 5vw;
+    height: 5vh;
+    top: 5vh;
     left: 45vw;
     font-size: 1.5rem;
     margin-left: 10vw;
+    color: white;
+    background-color: #fda102;
+    border: none;
   }
   
   .not-expanded {
