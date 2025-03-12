@@ -33,7 +33,7 @@ export const SearchBar = () => {
                 <SearchIcon className="search-icon"/>
                 <input 
                     className="search-input"
-                    placeholder="Search via username..."
+                    placeholder="Search for other users by username"
                     value={input}
                     onChange={(e) => handleChange(e.target.value)}
                 />
