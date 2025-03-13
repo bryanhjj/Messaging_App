@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { ChatInput } from "./ChatInput";
+import { UserContext } from "../Users/UserContext";
+import "./Chatroom.css";
 
 // get some mui stuff
 
 export default function Chatroom () {
     const { chatroomId } = useParams();
     const [chatlog, setChatlog] = useState([]);
+    const [user] = useContext(UserContext);
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -26,13 +29,13 @@ export default function Chatroom () {
     }, []);
 
     return (
-        <div>
-            <div id="chat-container">
+        <div className="cr-container">
+            <div className="chatroom">
                 {chatlog.map(c => {
                     return( 
-                        <div key={c.id}>
-                            <p>{c.content}</p>
-                            <p>{c.createdAt}</p>
+                        <div key={c.id} className={`${user.id == c.author.id ? "right-bubble" : "left-bubble"}`}>
+                            <p className="cr-content">{c.content}</p>
+                            <p className="msg-date">{new Date(c.createdAt).toLocaleDateString()} {new Date(c.createdAt).toLocaleTimeString()}</p>
                         </div>
                     )  
                 })}

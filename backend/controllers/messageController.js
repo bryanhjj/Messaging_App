@@ -18,7 +18,12 @@ export const chatroomMessageGet = async(req, res) => {
             id: true,
             content: true,
             createdAt: true,
-            authorId: true,
+            author: {
+                select: {
+                    id: true,
+                    username: true,
+                },
+            },
         },
     });
     res.json(result);
