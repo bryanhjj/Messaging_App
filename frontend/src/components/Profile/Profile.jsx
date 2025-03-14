@@ -56,8 +56,6 @@ export default function Profile () {
         }
     };
 
-    console.log(targetUser);
-
     return (
         <div className="profile-container">
             { targetUser ? 
