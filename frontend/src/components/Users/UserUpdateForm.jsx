@@ -1,8 +1,7 @@
 import { useRef, useContext, useState } from "react";
 import { UserContext } from "../Users/UserContext";
 import { useNavigate } from "react-router-dom";
-
-// get mui stuff in here
+import "./UserUpdateForm.css";
 
 export default function UserUpdateForm () {
     const [ input, setInput ] = useState("");
@@ -32,17 +31,20 @@ export default function UserUpdateForm () {
     };
 
     return (
-        <form id="edit-form" onSubmit={handleOnSubmit}>
-            <label for="email">E-mail:</label>
-            <input
-                    placeholder="Insert your email here."
-                    aria-label="Email"
-                    type="email"
-                    name="email"
-                    defaultValue={user?.email}
-                    onChange={(e) => setInput(e.target.value)}
-            />
-            <button type="submit">Confirm changes</button>
+        <form className="edit-form" onSubmit={handleOnSubmit}>
+            <div className="email-edit-wrapper">
+                <label htmlFor="email" className="email-label">E-mail</label>
+                <input
+                        placeholder="Insert your email here."
+                        aria-label="Email"
+                        type="email"
+                        name="email"
+                        className="email-input"
+                        defaultValue={user?.email}
+                        onChange={(e) => setInput(e.target.value)}
+                />
+            </div>
+            <button type="submit" className="edit-btn">Confirm changes</button>
         </form>
     );
 };
