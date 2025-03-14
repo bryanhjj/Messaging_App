@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Users/UserContext";
-
-// some mui icon
+import "./LogoutForm.css";
 
 export default function LogoutForm () {
     const [user, setUser] = useContext(UserContext);
@@ -30,9 +29,9 @@ export default function LogoutForm () {
     };
 
     return (
-        <form id="logout-form" onSubmit={handleOnLogout}>
+        <form onSubmit={handleOnLogout} className="logout-form-container">
             <div>
-                <button type="submit">Logout</button>
+                <button type="submit" className="logout-btn">Logout</button>
             </div>
         </form>
     );
