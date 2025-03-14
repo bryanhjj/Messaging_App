@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../Users/UserContext";
-
-// insert mui stuff here
+import "./Profile.css";
 
 export default function Profile () {
     let { profileId } = useParams();
@@ -57,27 +56,29 @@ export default function Profile () {
         }
     };
 
+    console.log(targetUser);
+
     return (
-        <div>
+        <div className="profile-container">
             { targetUser ? 
-                <div>
-                    <div>
-                        <h1>{targetUser.username}</h1>
+                <div className="userpf-wrapper">
+                    <div className="username-container">
+                        <h1>{targetUser.user.username}</h1>
                     </div>
-                    <div>
+                    <div className="bio-container">
                         <h2>Bio: </h2>
                         <p>{targetUser.bio}</p>
                     </div>
                     { user.id === targetUser.id ? 
                         <></>
                         :
-                        <div>
-                            <button onClick={handleStartChat}>Send message</button>
-                        </div>
+                        <button onClick={handleStartChat} className="sendmsg-btn">
+                            Send message
+                        </button>
                     }
                 </div>
             : 
-                <div>
+                <div className="userpf-wrapper">
                     <h1>There's nothing here...</h1>
                 </div>
             }

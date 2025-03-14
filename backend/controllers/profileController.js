@@ -11,6 +11,15 @@ export const specificProfileGet = async (req, res) => {
     const { profileId } = req.params;
     const result = await prisma.profile.findFirst({
         where: { id: Number(profileId) },
+        select: {
+            id: true,
+            bio: true,
+            user: {
+                select: {
+                    username: true,
+                },
+            },
+        },
     });
     res.json(result);
 };
