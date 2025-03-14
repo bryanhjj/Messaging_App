@@ -1,0 +1,50 @@
+.delete-container {
+    margin-top: 5vh;
+}
+
+.yes-btn {
+    width: 60%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #fda102;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 30px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+
+.yes-btn:hover {
+    background: #6d44b8;
+}
+
+.no-btn {
+    width: 60%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: black;
+	background: white;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 30px;
+	outline: none;
+	border-radius: 5px;
+    border-width: 1px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+
+/* Mobile ver */
+@media only screen and (max-width: 600px) {
+    .delete-container {
+        width: 70vw;
+    }
+}

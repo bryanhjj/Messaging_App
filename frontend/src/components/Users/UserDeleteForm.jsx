@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Users/UserContext";
-
-// get mui stuff in here
+import "./UserDeleteForm.css";
 
 export default function UserDeleteForm () {
     const navigate = useNavigate();
@@ -29,10 +28,12 @@ export default function UserDeleteForm () {
     };
 
     return (
-        <form onSubmit={handleOnSubmit}>
-            <h2>Are you certain that you want to delete your account?</h2>
-            <button type="submit">YES</button>
-            <button type="button" onClick={() => {navigate(-1);}}>NO</button>
+        <form onSubmit={handleOnSubmit} className="delete-container">
+            <h2 className="warning-msg">Are you certain that you want to delete your account?</h2>
+            <div>
+                <button type="submit" className="yes-btn">YES</button>
+                <button type="button" onClick={() => {navigate(-1);} } className="no-btn">NO</button>
+            </div>
         </form>
     );
 };
