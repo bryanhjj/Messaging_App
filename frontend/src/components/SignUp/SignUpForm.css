@@ -1,0 +1,61 @@
+/* Desktop ver */
+.signup-form {
+    margin-top: 5vh;
+    width: 50vw;
+}
+
+.signup-input {
+    width: 60%;
+	height: 10px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 20px auto;
+	padding: 12px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+    font-size: 1.125em;
+}
+
+.signup-textarea {
+    width: 60%;
+	height: 10vh;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 20px auto;
+	padding: 12px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+    font-size: 1.125em;
+}
+
+.signup-btn {
+    width: 60%;
+	height: 40px;
+	margin: 20vh auto 0 auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #fda102;
+	font-size: 1em;
+	font-weight: bold;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+
+.signup-btn:hover {
+    background: #6d44b8;
+}
+
+/* Mobile ver */
+@media only screen and (max-width: 600px) {
+    .signup-form {
+        width: 80vw;
+    }
+}
