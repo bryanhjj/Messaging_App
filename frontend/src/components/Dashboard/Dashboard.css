@@ -8,7 +8,7 @@
     overflow: scroll;
 }
 
-::-webkit-scrollbar {
+.chatroom-container::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
 }
