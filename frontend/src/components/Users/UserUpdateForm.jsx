@@ -35,12 +35,11 @@ export default function UserUpdateForm () {
             <div className="email-edit-wrapper">
                 <label htmlFor="email" className="email-label">E-mail</label>
                 <input
-                        placeholder="Insert your email here."
+                        placeholder="Insert your new email here."
                         aria-label="Email"
                         type="email"
                         name="email"
                         className="email-input"
-                        defaultValue={user?.email}
                         onChange={(e) => setInput(e.target.value)}
                 />
             </div>
