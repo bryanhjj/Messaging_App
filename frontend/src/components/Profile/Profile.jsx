@@ -48,12 +48,8 @@ export default function Profile () {
             })
             .then((res) => res.json())
             .catch((err) => console.log(err));
-        if (!result.ok) {
-            throw new Error("An error has occured.");
-        } else {
-            alert("Chatroom created.");
-            navigate("/");
-        }
+        alert("Chatroom created.");
+        navigate("/");
     };
 
     return (
