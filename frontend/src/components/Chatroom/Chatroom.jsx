@@ -33,7 +33,7 @@ export default function Chatroom () {
             <div className="chatroom">
                 {chatlog.map(c => {
                     return( 
-                        <div key={c.id} className={`${user.id == c.author.id ? "right-bubble" : "left-bubble"}`}>
+                        <div key={c.id} className={`${user.id === c.authorId ? "right-bubble" : "left-bubble"}`}>
                             <p className="cr-content">{c.content}</p>
                             <p className="msg-date">{new Date(c.createdAt).toLocaleDateString()} {new Date(c.createdAt).toLocaleTimeString()}</p>
                         </div>
