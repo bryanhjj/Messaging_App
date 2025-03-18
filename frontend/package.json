@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://bryanhjj.github.io/Messaging_App/login",
   "scripts": {
-    "predeploy": "npm run dist",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
