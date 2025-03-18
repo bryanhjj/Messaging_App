@@ -1,16 +1,18 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ChatInput } from "./ChatInput";
 import { UserContext } from "../Users/UserContext";
 import "./Chatroom.css";
 
 // get some mui stuff
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 export default function Chatroom () {
     const { chatroomId } = useParams();
     const [chatlog, setChatlog] = useState([]);
     const [user] = useContext(UserContext);
     const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchChatlog = async () => {
@@ -28,8 +30,24 @@ export default function Chatroom () {
         fetchChatlog();
     }, []);
 
+    const otherUser = chatlog.find((u) => {
+        if (u.id != user.id) {
+            return u;
+        }
+    })
+
     return (
         <div className="cr-container">
+            {otherUser ? 
+                <div className="header">
+                    <button className="chevron-button" onClick={() => {navigate(-1);}}>
+                        <ChevronLeftIcon />
+                    </button>
+                    <h3 className="chat-title">Chatting with: {otherUser.author.username}</h3>
+                </div>
+            : 
+                <p>Loading...</p>
+            }
             <div className="chatroom">
                 {chatlog.map(c => {
                     return( 

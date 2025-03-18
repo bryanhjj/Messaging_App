@@ -8,6 +8,20 @@
     height: 80vh;
 }
 
+.chevron-button {
+    border: solid;
+    border-radius: 100%;
+    background-color: white;
+}
+
+.chat-title {
+    font-size: 1.2rem;
+    display: inline;
+    position: relative;
+    left: 2vw;
+    bottom: 1vh;
+}
+
 .left-bubble {
     position: relative;
     padding: 10px 20px;
