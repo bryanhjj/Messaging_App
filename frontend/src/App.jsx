@@ -1,4 +1,4 @@
-import UserProvider from "./components/Users/UserContext";
+import { UserProvider } from "./components/Users/UserContext";
 import Router from "./routes/router";
 
 function App() {
