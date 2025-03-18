@@ -31,15 +31,17 @@
 /* Mobile ver */
 @media only screen and (max-width: 600px) {
     .ci-wrapper{
+        margin: 0 auto;
         width: 70vw;
-        margin: auto;
     }
 
     .chat-input {
         height: 4vh;
+        width: 55vw;
     }
 
     .send-btn {
         height: 5vh;
+        display: inline;
     }
 }

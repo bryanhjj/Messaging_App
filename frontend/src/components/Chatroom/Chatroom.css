@@ -5,6 +5,7 @@
 
 .chatroom {
     overflow: scroll;
+    overflow-x: hidden;
     height: 80vh;
 }
 
@@ -28,7 +29,7 @@
     background: #E5E5EA;
     border-radius: 25px;
     margin-top: 1vh;
-    margin-right: 2vw;
+    margin-left: 2vw;
     padding: 1px 2vw;
     width: 20vw;
     color: black;
@@ -107,14 +108,19 @@
 /* Mobile ver */
 @media only screen and (max-width: 600px) {
     .cr-container {
-        width: 70vw;
+        width: 80vw;
+    }
+
+    .chatroom {
+        height: 75vh;
+        padding: 0;
     }
 
     .left-bubble {
-        width: 30vw;
+        width: 26vw;
     }
 
     .right-bubble {
-        width: 30vw;
+        width: 26vw;
     }
 }
