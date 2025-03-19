@@ -17,14 +17,14 @@ Password: test123
 ## Technologies Used
 
 ### Frontend
-Javascript
-React
-Vite
-Vercel
+- Javascript
+- React
+- Vite
+- Vercel
 
 ### Backend
-Express
-Nodejs
-PostgreSQL
-Prisma ORM
-JwtToken
+- Express
+- Nodejs
+- PostgreSQL
+- Prisma ORM
+- JwtToken
