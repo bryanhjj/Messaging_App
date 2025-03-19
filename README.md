@@ -4,6 +4,8 @@ A full-stack messenger app project from Project Odin.
 
 Live preview : https://messaging-app-teal.vercel.app/
 
+P.S. login times may vary since it might take some time for the backend, hosted by Render, to "wake up".
+
 ## Available test accounts
 
 Email: test01@gmail.com
