@@ -17,7 +17,7 @@ app.use(express.json());
 
 const allowedOrigins = [
     'http://localhost:5173',
-    process.env.FRONTEND_URL
+    'https://messaging-app-teal.vercel.app'
 ];
 const corsOptions = {
     origin: (origin, callback) => {

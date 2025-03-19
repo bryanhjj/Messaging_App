@@ -24,7 +24,7 @@ export default function LogoutForm () {
             localStorage.setItem("token", result.token);
             localStorage.setItem("expirationTime", Date.now());
             setUser(null);
-            navigate("/login");
+            navigate("/");
         };
     };
 
