@@ -29,7 +29,7 @@ export default function SignUpForm () {
             throw new Error('Registration failed');
         } else {
             alert("User registered successfully!");
-            navigate("/login");
+            navigate("/");
         };
     };
 
