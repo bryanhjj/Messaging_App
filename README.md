@@ -27,4 +27,5 @@ Password: test123
 - Nodejs
 - PostgreSQL
 - Prisma ORM
+- Render
 - JwtToken
