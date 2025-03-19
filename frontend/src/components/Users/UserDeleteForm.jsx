@@ -23,7 +23,7 @@ export default function UserDeleteForm () {
             alert("Account deletion successful.");
             localStorage.setItem("token", null);
             localStorage.setItem("expirationTime", Date.now());
-            navigate("/login");
+            navigate("/");
         };
     };
 

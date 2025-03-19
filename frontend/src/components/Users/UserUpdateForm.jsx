@@ -26,7 +26,7 @@ export default function UserUpdateForm () {
             throw new Error('Update failed');
         } else {
             alert("Profile has been successfully updated.");
-            navigate("/");
+            navigate("/dashboard");
         };
     };
 
