@@ -39,7 +39,7 @@ export default function Dashboard () {
                     <div className="chatroom-container">
                         {chatroom.map((c) => {
                             return (    
-                                <Link to={`chatroom/${c.id}`} className="chatroom-card" key={c.id}>
+                                <Link to={`/chatroom/${c.id}`} className="chatroom-card" key={c.id}>
                                     {c.users.map((u) => {
                                         {/* to show the other chatroom participant that's not the logged in user themselves */}
                                         if (u.id != user.id) {
