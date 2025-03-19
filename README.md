@@ -26,6 +26,7 @@ Password: test123
 - Express
 - Nodejs
 - PostgreSQL
+- Neon
 - Prisma ORM
 - Render
 - JwtToken
