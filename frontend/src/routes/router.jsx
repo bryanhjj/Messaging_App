@@ -21,7 +21,7 @@ const Router = () => {
             errorElement: <ErrorPage />,
             children: [
               {
-                index: true,
+                path: "dashboard",
                 element: <Dashboard />,
               },
               {
@@ -45,7 +45,7 @@ const Router = () => {
                 element: <SignUpForm />,
               },
               {
-                path: "login",
+                index: true,
                 element: <LoginForm />,
               },
               {

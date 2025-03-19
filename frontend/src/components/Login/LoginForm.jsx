@@ -32,7 +32,7 @@ export default function LoginForm () {
                 setUser(userInfo.user);
                 localStorage.setItem("token", result.token);
                 localStorage.setItem("expirationTime", expTime);
-                navigate("/");
+                navigate("/dashboard");
             }
         } catch(err) {
             console.log(err);
