@@ -41,7 +41,7 @@ export const SearchBar = () => {
             <div className="search-result-list">
                 {searchResults.map((item) => {
                     return (
-                        <Link key={item.id} to={`profile/${item.id}`} className="results">
+                        <Link key={item.id} to={`/profile/${item.id}`} className="results">
                             {item.username}
                         </Link>
                     )
