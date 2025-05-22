@@ -6,7 +6,6 @@ import "./UserUpdateForm.css";
 export default function UserUpdateForm () {
     const [ input, setInput ] = useState("");
     const [ user ] = useContext(UserContext);
-    const updateForm = useRef(null);
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
